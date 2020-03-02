@@ -4,7 +4,7 @@ namespace FYT.Models.Base
 {
     public class EntityBase
     {
-       [Key]
+        [Key]
         public int Id { get; set; }
 
         [Timestamp]
