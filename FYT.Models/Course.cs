@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using FYT.Models.Base;
 
 namespace FYT.Models
 {
-    class Course
+    public partial class Course : EntityBase
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [Display(Name = "Course Name")]
         public string Name { get; set; }

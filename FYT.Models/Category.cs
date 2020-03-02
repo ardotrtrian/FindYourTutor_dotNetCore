@@ -2,14 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using FYT.Models.Base;
 
 namespace FYT.Models
 {
-    public class Category
-    {
-        [Key]
-        public int Id { get; set; }
-
+    public partial class Category : EntityBase
+    {     
         [Required]
         public string Name { get; set; }
     }
