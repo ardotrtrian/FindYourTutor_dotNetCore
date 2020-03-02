@@ -15,5 +15,12 @@ namespace FYT.DataAccess.Data
         }
 
         public DbSet<Category> Category { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Image> Image { get; set; }
+        public DbSet<Comment> Comment { get; set; }
+        public DbSet<ReservedCourse> ReservedCourses { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Rating> Rating { get; set; }
+
     }
 }

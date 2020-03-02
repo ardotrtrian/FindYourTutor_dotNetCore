@@ -13,9 +13,22 @@ namespace FYT.Models
         public string Name { get; set; }
 
         [Required]
-        public int CategoryId { get; set; }
+        public int TutorId { get; set; }
 
         [Required]
-        public int TutorId { get; set; }
+        public virtual Category Category { get; set; }
+
+        [Required]
+        public DateTime StartDate { get; set; }
+
+        [Required]
+        public DateTime EndDate { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
+
+
     }
 }
