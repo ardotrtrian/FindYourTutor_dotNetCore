@@ -15,6 +15,6 @@ namespace FYT.Models
         public virtual User Student { get; set; }
 
         [Required]
-        public int Rate { get; set; }
+        public byte Rate { get; set; }
     }
 }

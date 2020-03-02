@@ -9,6 +9,9 @@ namespace FYT.Models
     public partial class Category : EntityBase
     {     
         [Required]
+        [StringLength(25)]
         public string Name { get; set; }
+
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

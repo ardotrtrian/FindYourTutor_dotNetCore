@@ -10,6 +10,7 @@ namespace FYT.Models
     {
         [Required]
         [Display(Name = "Course Name")]
+        [StringLength(25)]
         public string Name { get; set; }
 
         [Required]
