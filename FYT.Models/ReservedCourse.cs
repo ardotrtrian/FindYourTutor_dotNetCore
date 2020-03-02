@@ -12,7 +12,7 @@ namespace FYT.Models
         public virtual Course Course { get; set; }
 
         [Required]
-        public virtual ICollection<User> Users { get; set; }
+        public User Student { get; set; }
 
         [Required]
         public Status Status { get; set; }

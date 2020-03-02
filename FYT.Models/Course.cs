@@ -13,7 +13,7 @@ namespace FYT.Models
         public string Name { get; set; }
 
         [Required]
-        public int TutorId { get; set; }
+        public User Tutor { get; set; }
 
         [Required]
         public virtual Category Category { get; set; }
@@ -29,6 +29,6 @@ namespace FYT.Models
 
         public virtual ICollection<Comment> Comments { get; set; }
 
-
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }
