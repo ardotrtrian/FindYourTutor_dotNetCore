@@ -8,6 +8,8 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         ICategoryRepository Category { get; }
 
+        ICourseRepository Course { get; }
+
         void Save();
     }
 }
