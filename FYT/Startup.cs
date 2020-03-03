@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FYT.DataAccess.Data;
 using FYT.DataAccess.Data.Repository.IRepository;
+using FYT.DataAccess.Data.Repository;
+using FYT.BusinessLogic.BusinessRules;
 
 namespace FYT
 {
@@ -35,7 +37,8 @@ namespace FYT
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IUnitOfWork, IUnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<CourseBusinessRule>();
 
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
             services.AddRazorPages();
