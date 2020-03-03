@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
-    interface ICourseRepository : IRepository<Course>
+    public interface ICourseRepository : IRepository<Course>
     {
         void Update(Course course);
 

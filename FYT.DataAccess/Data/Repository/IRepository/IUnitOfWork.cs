@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
-    interface IUnitOfWork : IDisposable
+    public interface IUnitOfWork : IDisposable
     {
         ICategoryRepository Category { get; }
 
