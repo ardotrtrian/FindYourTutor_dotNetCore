@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FYT.BusinessLogic.BusinessRules;
 using FYT.DataAccess.Data.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,11 @@ namespace FYT.Areas.User.Controllers
     [Area("User")]
     public class CourseController : Controller
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly CourseBusinessRule _br;
 
-        public CourseController(IUnitOfWork unitOfWork)
+        public CourseController(CourseBusinessRule br)
         {
-            _unitOfWork = unitOfWork;
+            _br = br;
         }
 
         #region API calls
@@ -23,23 +24,20 @@ namespace FYT.Areas.User.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _unitOfWork.Course.GetAll() });
+            return Json(new { data = _br.GetAll() });
         }
 
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var objFromDb = _unitOfWork.Course.Get(id);
+            var success = _br.Delete(id);
 
-            if (objFromDb == null)
+            if (success == false)
             {
-                return Json(new { success = false, message="Error while deleting!"});
+                return Json(new { success , message = "Error while deleting!" });
             }
 
-            _unitOfWork.Course.Remove(objFromDb);
-            _unitOfWork.Save();
-
-            return Json(new { success = true, message = "Course deleted successfully!" });
+            return Json(new { success , message = "Course deleted successfully!"  });
         }
 
         #endregion
