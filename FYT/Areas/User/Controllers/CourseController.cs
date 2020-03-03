@@ -104,12 +104,6 @@ namespace FYT.Areas.User.Controllers
             }
         }
 
-        // GET: Course/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Course/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
