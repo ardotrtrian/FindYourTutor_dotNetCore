@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FYT.Models
 {
-    public class User : EntityBase
+    public partial class User : EntityBase
     {
         [Required]
         public string Username { get; set; }
