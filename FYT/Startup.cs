@@ -15,6 +15,8 @@ using FYT.DataAccess.Data;
 using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.DataAccess.Data.Repository;
 using FYT.BusinessLogic.BusinessRules;
+using FYT.BusinessLogic.IBusinessRules;
+using FYT.Models;
 
 namespace FYT
 {
@@ -37,8 +39,10 @@ namespace FYT
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<CourseBusinessRule>();
+            //--
+                services.AddScoped<IUnitOfWork, UnitOfWork>();
+                services.AddScoped<ICourseBusinessRule<Course>, CourseBusinessRule>();
+            //--
 
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
             services.AddRazorPages();

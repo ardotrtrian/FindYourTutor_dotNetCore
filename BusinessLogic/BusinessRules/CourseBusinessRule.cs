@@ -1,4 +1,5 @@
-﻿using FYT.DataAccess.Data.Repository.IRepository;
+﻿using FYT.BusinessLogic.IBusinessRules;
+using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
-    public class CourseBusinessRule
+    public class CourseBusinessRule : ICourseBusinessRule<Course>
     {
         private readonly IUnitOfWork _unitOfWork;
 
