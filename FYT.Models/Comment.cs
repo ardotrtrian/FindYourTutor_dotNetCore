@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FYT.Models
 {
-    public class Comment : EntityBase
+    public partial class Comment : EntityBase
     {
         [Required]
         public virtual Course Course { get; set; }
