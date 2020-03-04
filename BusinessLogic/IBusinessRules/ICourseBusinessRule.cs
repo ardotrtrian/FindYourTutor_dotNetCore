@@ -9,7 +9,10 @@ namespace FYT.BusinessLogic.IBusinessRules
     {
         public IEnumerable<Course> GetAll();
 
+        public IEnumerable<Course> GetAll(int TutorId);
+
         public bool Delete(int id);
+
 
     }
 }

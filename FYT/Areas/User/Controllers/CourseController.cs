@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FYT.BusinessLogic.BusinessRules;
+using FYT.BusinessLogic.IBusinessRules;
 using FYT.DataAccess.Data.Repository.IRepository;
+using FYT.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +14,16 @@ namespace FYT.Areas.User.Controllers
     [Area("User")]
     public class CourseController : Controller
     {
-        private readonly CourseBusinessRule _br;
+        private readonly ICourseBusinessRule<Course> _br;
 
-        public CourseController(CourseBusinessRule br)
+        public CourseController(ICourseBusinessRule<Course> br)
         {
             _br = br;
+        }
+
+        public ActionResult Index()
+        {
+            return View();
         }
 
         #region API calls
@@ -40,83 +47,11 @@ namespace FYT.Areas.User.Controllers
             return Json(new { success , message = "Course deleted successfully!"  });
         }
 
+        [HttpGet]
+        public IActionResult Get(int TutorId)
+        {
+            return Json(new { data = _br.Get(TutorId) });
+        }
         #endregion
-
-
-
-        // GET: Course
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: Course/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Course/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Course/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Course/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Course/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // POST: Course/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
     }
 }

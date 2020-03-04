@@ -14,9 +14,11 @@ namespace FYT.Models
         public string Name { get; set; }
 
         [Required]
+        public int TutorId { get; set; }
         public User Tutor { get; set; }
 
         [Required]
+        public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
 
         [Required]

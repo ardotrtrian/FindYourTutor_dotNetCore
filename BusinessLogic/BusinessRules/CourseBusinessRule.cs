@@ -35,5 +35,10 @@ namespace FYT.BusinessLogic.BusinessRules
 
             return true;
         }
+
+        public IEnumerable<Course> GetAll(int TutorId)
+        {
+            return _unitOfWork.Course.GetAll(TutorId);
+        }
     }
 }

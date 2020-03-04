@@ -16,6 +16,11 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
+        public IEnumerable<Course> GetAll(int tutorId)
+        {
+            return _db.Course.Where(c => c.TutorId == tutorId); 
+        }
+
         public void Update(Course course)
         {
             var objFromDb = _db.Course.FirstOrDefault(c => c.Id == course.Id);
