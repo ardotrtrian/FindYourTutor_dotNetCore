@@ -50,7 +50,7 @@ namespace FYT.Areas.User.Controllers
         [HttpGet]
         public IActionResult Get(int TutorId)
         {
-            return Json(new { data = _br.Get(TutorId) });
+            return Json(new { data = _br.GetAll(TutorId) });
         }
         #endregion
     }

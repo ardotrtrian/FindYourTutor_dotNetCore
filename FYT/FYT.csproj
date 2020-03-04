@@ -20,11 +20,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Controllers\" />
-  </ItemGroup>
-
-
-  <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\FYT.BusinessLogic.csproj" />
     <ProjectReference Include="..\FYT.DataAccess\FYT.DataAccess.csproj" />
   </ItemGroup>

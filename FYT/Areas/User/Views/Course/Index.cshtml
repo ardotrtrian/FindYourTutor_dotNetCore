@@ -7,11 +7,15 @@
 <br />
 <div class="border backgroundWhite">
     <div class="row">
+       
         <div class="col-6">
-            <h2 class="text-primary">Category List</h2>
+            <br />
+            <h2 class="text-primary"> Courses created by me</h2>
         </div>
+
         <div class="col-6 text-right">
-            <a asp-action="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp; Create New Category</a>
+            <br />
+            <a asp-action="Upsert" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp; Create New Course</a>
         </div>
     </div>
 
@@ -21,8 +25,8 @@
     <table id="tblData" class="table table-striped table-bordered" style="width:100%">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Display Order</th>
+                <th>Course Name</th>
+                <th>Description</th>
                 <th></th>
             </tr>
         </thead>
