@@ -20,9 +20,9 @@ namespace FYT.DataAccess.Data.Repository
             return _db.Comment.Where(c => c.Student.Id == Student.Id);
         }
 
-        public IEnumerable<Comment> GetAll(Course Course)
+        public IEnumerable<Comment> GetAll(Course course)
         {
-            return _db.Comment.Where(c => c.Course.Id == Course.Id);
+            return _db.Comment.Where(c => c.Course.Id == course.Id);
         }
 
         public void Update(Comment comment)

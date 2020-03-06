@@ -11,6 +11,6 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 
         IEnumerable<Comment> GetAll(User Student);
 
-        IEnumerable<Comment> GetAll(Course Course);
+        IEnumerable<Comment> GetAll(Course course);
     }
 }
