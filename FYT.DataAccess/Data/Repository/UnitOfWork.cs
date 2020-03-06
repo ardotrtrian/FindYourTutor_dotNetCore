@@ -13,11 +13,26 @@ namespace FYT.DataAccess.Data.Repository
 
         public ICourseRepository Course { get; private set; }
 
+        public IImageRepository Image { get; private set; }
+
+        public ICommentRepository Comment { get; private set; }
+
+        public IRatingRepository Rating { get; private set; }
+
+        public IReservedCourseRepository ReservedCourse { get; private set; }
+
+        public IUserRepository UserRepository { get; private set; }
+
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             Course = new CourseRepository(_db);
+            Image = new ImageRepository(_db);
+            Comment = new CommentRepository(_db);
+            Rating = new RatingRepository(_db);
+            ReservedCourse = new ReservedCourseRepository(_db);
+            UserRepository = new UserRepository(_db);
         }
 
         public void Dispose()

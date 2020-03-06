@@ -14,6 +14,12 @@ namespace FYT.DataAccess.Data.Repository.IRepository
         
         ICommentRepository Comment { get; }
 
+        IRatingRepository Rating { get; }
+
+        IReservedCourseRepository ReservedCourse { get; }
+
+        IUserRepository UserRepository { get; }
+
         void Save();
     }
 }
