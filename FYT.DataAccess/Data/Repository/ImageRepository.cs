@@ -17,7 +17,7 @@ namespace FYT.DataAccess.Data.Repository
         }
         
         public void update(Image image)
-        {
+        { 
             var objFromDb = _db.Image.FirstOrDefault(i => i.Id == image.Id);
 
             objFromDb.URL = image.URL;
