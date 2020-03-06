@@ -11,7 +11,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
         ICourseRepository Course { get; }
 
         IImageRepository Image { get; }
-
+        
         ICommentRepository Comment { get; }
 
         void Save();
