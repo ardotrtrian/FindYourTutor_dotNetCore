@@ -20,7 +20,9 @@ namespace FYT.DataAccess.Data.Repository
         {
             var objFromDb = _db.Image.FirstOrDefault(i => i.Id == image.Id);
 
-            objFromDb.URL = image.URL; 
+            objFromDb.URL = image.URL;
+
+            _db.SaveChanges();
         }
     }
 }
