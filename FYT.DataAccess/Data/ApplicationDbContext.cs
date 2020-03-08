@@ -15,23 +15,6 @@ namespace FYT.DataAccess.Data
         {
         }
 
-        internal ApplicationDbContext()
-        {
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var connectionString = @"server=(LocalDb)\MSSQLLocalDB;database=FYT;
-                                    integrated security=True; MultipleActiveResultSets=True;App=EntityFramework;";
-                optionsBuilder.
-                    UseSqlServer(connectionString, options => options.EnableRetryOnFailure())
-                    .ConfigureWarnings(warnings => warnings.
-                    Throw(RelationalEventId.QueryClientEvaluationWarning));
-            }
-        }
-        
         public DbSet<Category> Category { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Image> Image { get; set; }

@@ -30,6 +30,9 @@ namespace FYT.Models
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public double Price { get; set; }
+
         public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Rating> Ratings { get; set; }
