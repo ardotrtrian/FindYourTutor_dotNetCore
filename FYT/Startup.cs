@@ -42,6 +42,7 @@ namespace FYT
             //--
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<ICourseBusinessRule<Course>, CourseBusinessRule>();
+            services.AddScoped<ICategoryBusinessRules<Category>, CategoryBusinessRules>();
             //--
 
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
