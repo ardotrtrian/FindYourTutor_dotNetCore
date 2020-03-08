@@ -15,14 +15,14 @@ namespace FYT.DataAccess.Data.Repository
         {
             _db = db;
         }
-        public IEnumerable<Comment> GetAll(User Student)
+        public IEnumerable<Comment> GetAllByStudent(int studentId)
         {
-            return _db.Comment.Where(c => c.Student.Id == Student.Id);
+            return _db.Comment.Where(c => c.Student.Id == studentId);
         }
 
-        public IEnumerable<Comment> GetAll(Course course)
+        public IEnumerable<Comment> GetAll(int courseId)
         {
-            return _db.Comment.Where(c => c.Course.Id == course.Id);
+            return _db.Comment.Where(c => c.Course.Id == courseId);
         }
 
         public void Update(Comment comment)

@@ -16,14 +16,14 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public IEnumerable<Rating> GetAll(Course course)
+        public IEnumerable<Rating> GetAll(int courseId)
         {
-            return _db.Rating.Where(r => r.Course.Id == course.Id);
+            return _db.Rating.Where(r => r.Course.Id == courseId);
         }
 
-        public IEnumerable<Rating> GetAll(User Student)
+        public IEnumerable<Rating> GetAllByStudent(int studentId)
         {
-            return _db.Rating.Where(r => r.Student.Id == Student.Id);
+            return _db.Rating.Where(r => r.Student.Id == studentId);
         }
 
         public void Update(Rating rating)

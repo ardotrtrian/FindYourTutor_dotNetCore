@@ -9,9 +9,9 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         void Update(ReservedCourse reservedCourse);
 
-        IEnumerable<ReservedCourse> GetAll(User Student);
+        IEnumerable<ReservedCourse> GetAll(int studentId);
 
-        IEnumerable<ReservedCourse> GetAll(Course course);
+        IEnumerable<ReservedCourse> GetAllByCourse(int courseId);
 
         IEnumerable<ReservedCourse> GetAll(Status status);
     }

@@ -16,14 +16,14 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public IEnumerable<ReservedCourse> GetAll(User Student)
+        public IEnumerable<ReservedCourse> GetAll(int studentId)
         {
-            return _db.ReservedCourses.Where(r => r.Student.Id == Student.Id);
+            return _db.ReservedCourses.Where(r => r.Student.Id == studentId);
         }
 
-        public IEnumerable<ReservedCourse> GetAll(Course course)
+        public IEnumerable<ReservedCourse> GetAllByCourse(int courseId)
         {
-            return _db.ReservedCourses.Where(r => r.Course.Id == course.Id);
+            return _db.ReservedCourses.Where(r => r.Course.Id == courseId);
         }
 
         public IEnumerable<ReservedCourse> GetAll(Status status)
