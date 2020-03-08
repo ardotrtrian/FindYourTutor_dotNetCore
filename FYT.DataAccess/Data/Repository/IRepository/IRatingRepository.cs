@@ -9,9 +9,9 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         void Update(Rating rating);
 
-        IEnumerable<Rating> GetAll(Course course);
-
-        public IEnumerable<Rating> GetAll(User Student);
+        IEnumerable<Rating> GetAll(int courseId);
+        
+        IEnumerable<Rating> GetAllByStudent(int studentId);
         
     }
 }
