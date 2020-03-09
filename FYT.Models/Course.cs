@@ -9,6 +9,13 @@ namespace FYT.Models
 {
     public partial class Course : EntityBase
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Course()
+        {
+            Comment = new HashSet<Comment>();
+            Rating = new HashSet<Rating>();
+        }
+
         [Required]
         [Display(Name = "Course Name")]
         [StringLength(25)]
@@ -36,8 +43,10 @@ namespace FYT.Models
         [Required]
         public double Price { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Comment> Comment { get; set; }
 
-        public virtual ICollection<Rating> Ratings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Rating> Rating { get; set; }
     }
 }

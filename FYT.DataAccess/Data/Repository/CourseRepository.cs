@@ -18,7 +18,7 @@ namespace FYT.DataAccess.Data.Repository
 
         public IEnumerable<Course> GetAll(int tutorId)
         {
-            return new List<Course>(); //_db.Course.Where(c => c.TutorId == tutorId); 
+            return _db.Course.Where(c => c.TutorId == tutorId); 
         }
 
         public void Update(Course course)
@@ -26,7 +26,7 @@ namespace FYT.DataAccess.Data.Repository
             var objFromDb = _db.Course.FirstOrDefault(c => c.Id == course.Id);
 
             objFromDb.Name = course.Name;
-            //objFromDb.Category = course.Category;
+            objFromDb.Category = course.Category;
             objFromDb.Description = course.Description;
             objFromDb.StartDate = course.EndDate;
 

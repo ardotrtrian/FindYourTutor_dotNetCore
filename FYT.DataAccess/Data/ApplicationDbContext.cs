@@ -64,12 +64,6 @@ namespace FYT.DataAccess.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Course>()
-                .HasMany(e => e.ReservedCourse)
-                .WithOne(e => e.Course)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<Rating>()
                 .Property(e => e.Timestamp)
                 .IsFixedLength();
@@ -87,13 +81,6 @@ namespace FYT.DataAccess.Data
                 .WithOne(e => e.User)
                 .IsRequired()
                 .HasForeignKey(e => e.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Course)
-                .WithOne(e => e.User)
-                .IsRequired()
-                .HasForeignKey(e => e.TutorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
