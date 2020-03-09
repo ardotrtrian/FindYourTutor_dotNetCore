@@ -7,11 +7,18 @@ using FYT.Models.Base;
 namespace FYT.Models
 {
     public partial class Category : EntityBase
-    {     
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Category()
+        {
+            Course = new HashSet<Course>();
+        }
+
         [Required]
-        [StringLength(25)]
+        [StringLength(50)]
         public string Name { get; set; }
 
-        public virtual ICollection<Course> Courses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Course> Course { get; set; }
     }
 }

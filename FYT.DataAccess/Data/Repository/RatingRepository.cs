@@ -23,7 +23,7 @@ namespace FYT.DataAccess.Data.Repository
 
         public IEnumerable<Rating> GetAllByStudent(int studentId)
         {
-            return _db.Rating.Where(r => r.Student.Id == studentId);
+            return _db.Rating.Where(r => r.StudentId == studentId);
         }
 
         public void Update(Rating rating)

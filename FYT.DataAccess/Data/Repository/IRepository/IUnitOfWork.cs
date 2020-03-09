@@ -9,8 +9,6 @@ namespace FYT.DataAccess.Data.Repository.IRepository
         ICategoryRepository Category { get; }
 
         ICourseRepository Course { get; }
-
-        IImageRepository Image { get; }
         
         ICommentRepository Comment { get; }
 

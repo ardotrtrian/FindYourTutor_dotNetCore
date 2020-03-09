@@ -8,16 +8,17 @@ namespace FYT.Models
 {
     public partial class Comment : EntityBase
     {
-        [Required]
-        public virtual Course Course { get; set; }
+        public int CourseId { get; set; }
 
-        [Required]
-        public virtual User Student { get; set; }
+        public int StudentId { get; set; }
 
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public DateTime DateTime { get; set; }
+        public DateTime CreationDateTime { get; set; }
+                
+        public virtual Course Course { get; set; }
+
+        public virtual User User { get; set; }
     }
 }

@@ -8,13 +8,14 @@ namespace FYT.Models
 {
     public partial class Rating : EntityBase
     {
-        [Required]
+        public int CourseId { get; set; }
+
+        public int StudentId { get; set; }
+
+        public byte Rate { get; set; }
+               
         public virtual Course Course { get; set; }
 
-        [Required]
-        public virtual User Student { get; set; }
-
-        [Required]
-        public byte Rate { get; set; }
+        public virtual User User { get; set; }
     }
 }

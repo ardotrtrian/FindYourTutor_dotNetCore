@@ -17,7 +17,7 @@ namespace FYT.DataAccess.Data.Repository
         }
         public IEnumerable<Comment> GetAllByStudent(int studentId)
         {
-            return _db.Comment.Where(c => c.Student.Id == studentId);
+            return _db.Comment.Where(c => c.StudentId == studentId);
         }
 
         public IEnumerable<Comment> GetAll(int courseId)
