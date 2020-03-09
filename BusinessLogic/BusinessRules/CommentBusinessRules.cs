@@ -52,9 +52,9 @@ namespace FYT.BusinessLogic.BusinessRules
             return _unitOfWork.Comment.Get(id);
         }
 
-        public void Update(Comment comment)
+        public bool Update(Comment comment)
         {
-            _unitOfWork.Comment.Update(comment);
+            return _unitOfWork.Comment.Update(comment);
         }
     }
 }

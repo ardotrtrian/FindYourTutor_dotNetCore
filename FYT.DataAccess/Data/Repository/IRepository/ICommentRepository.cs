@@ -7,7 +7,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface ICommentRepository : IRepository<Comment>
     {
-        void Update(Comment comment);
+        bool Update(Comment comment);
 
         IEnumerable<Comment> GetAllByStudent(int studentId);
         

@@ -15,6 +15,6 @@ namespace FYT.BusinessLogic.IBusinessRules
 
         public void Create(Category category);
         
-        public void Update(Category category); 
+        public bool Update(Category category); 
     }
 }

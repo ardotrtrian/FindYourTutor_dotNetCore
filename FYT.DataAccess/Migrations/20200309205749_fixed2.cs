@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FYT.DataAccess.Migrations
 {
-    public partial class @fixed : Migration
+    public partial class fixed2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -67,7 +67,7 @@ namespace FYT.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Timestamp = table.Column<byte[]>(fixedLength: true, rowVersion: true, nullable: true),
-                    Username = table.Column<string>(maxLength: 50, nullable: false),
+                    UserName = table.Column<string>(maxLength: 50, nullable: false),
                     Email = table.Column<string>(maxLength: 50, nullable: false),
                     Password = table.Column<string>(maxLength: 50, nullable: false),
                     Role = table.Column<byte>(nullable: false),
@@ -225,7 +225,7 @@ namespace FYT.DataAccess.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Timestamp = table.Column<byte[]>(fixedLength: true, rowVersion: true, nullable: true),
                     CourseId = table.Column<int>(nullable: false),
-                    StudentId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(nullable: false),
                     CreationDateTime = table.Column<DateTime>(nullable: false)
                 },
@@ -239,8 +239,8 @@ namespace FYT.DataAccess.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Comment_User_StudentId",
-                        column: x => x.StudentId,
+                        name: "FK_Comment_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -275,7 +275,7 @@ namespace FYT.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReservedCourses",
+                name: "ReservedCourse",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -287,15 +287,15 @@ namespace FYT.DataAccess.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReservedCourses", x => x.Id);
+                    table.PrimaryKey("PK_ReservedCourse", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ReservedCourses_Course_CourseId",
+                        name: "FK_ReservedCourse_Course_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Course",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_ReservedCourses_User_StudentId",
+                        name: "FK_ReservedCourse_User_StudentId",
                         column: x => x.StudentId,
                         principalTable: "User",
                         principalColumn: "Id",
@@ -347,9 +347,9 @@ namespace FYT.DataAccess.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comment_StudentId",
+                name: "IX_Comment_UserId",
                 table: "Comment",
-                column: "StudentId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Course_CategoryId",
@@ -372,13 +372,13 @@ namespace FYT.DataAccess.Migrations
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservedCourses_CourseId",
-                table: "ReservedCourses",
+                name: "IX_ReservedCourse_CourseId",
+                table: "ReservedCourse",
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReservedCourses_StudentId",
-                table: "ReservedCourses",
+                name: "IX_ReservedCourse_StudentId",
+                table: "ReservedCourse",
                 column: "StudentId");
         }
 
@@ -406,7 +406,7 @@ namespace FYT.DataAccess.Migrations
                 name: "Rating");
 
             migrationBuilder.DropTable(
-                name: "ReservedCourses");
+                name: "ReservedCourse");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -7,7 +7,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface IRatingRepository : IRepository<Rating>
     {
-        void Update(Rating rating);
+        bool Update(Rating rating);
 
         IEnumerable<Rating> GetAll(int courseId);
         

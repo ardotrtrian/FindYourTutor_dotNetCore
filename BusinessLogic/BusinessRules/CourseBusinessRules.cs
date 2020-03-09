@@ -18,7 +18,7 @@ namespace FYT.BusinessLogic.BusinessRules
 
         public IEnumerable<Course> GetAll()
         {
-            return _unitOfWork.Course.GetAll() ;
+            return _unitOfWork.Course.GetAll();
         }
 
         public bool Delete(int id)
@@ -47,10 +47,10 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork.Save();
         }
 
-        public void Update(Course course)
+        public bool Update(Course course)
         {
-            _unitOfWork.Course.Update(course);
-            
+            return _unitOfWork.Course.Update(course);
+
         }
 
         public Course GetById(int id)

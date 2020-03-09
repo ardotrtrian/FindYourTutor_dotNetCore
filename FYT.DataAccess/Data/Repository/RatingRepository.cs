@@ -26,13 +26,17 @@ namespace FYT.DataAccess.Data.Repository
             return _db.Rating.Where(r => r.StudentId == studentId);
         }
 
-        public void Update(Rating rating)
+        public bool Update(Rating rating)
         {
             var objFromDb = _db.Rating.FirstOrDefault(r => r.Id == rating.Id);
-
+            if(objFromDb == null)
+            {
+                return false;
+            }
             objFromDb.Rate = rating.Rate;            
 
             _db.SaveChanges();
+            return true;
         }
     }
 }

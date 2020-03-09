@@ -34,7 +34,7 @@ namespace FYT.DataAccess.Data.Repository
 
         public void Dispose()
         {
-            _db.Dispose();
+            _db?.Dispose();
         }
         public void Save()
         {

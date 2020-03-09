@@ -7,7 +7,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface IReservedCourseRepository : IRepository<ReservedCourse>
     {
-        void Update(ReservedCourse reservedCourse);
+        bool Update(ReservedCourse reservedCourse);
 
         IEnumerable<ReservedCourse> GetAll(int studentId);
 

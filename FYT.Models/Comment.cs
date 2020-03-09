@@ -10,7 +10,7 @@ namespace FYT.Models
     {
         public int CourseId { get; set; }
 
-        public int StudentId { get; set; }
+        public int UserId { get; set; }
 
         [Required]
         public string Description { get; set; }

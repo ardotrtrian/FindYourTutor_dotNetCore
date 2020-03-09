@@ -59,20 +59,20 @@ namespace FYT.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion")
                         .IsFixedLength(true);
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Comment");
                 });
@@ -182,7 +182,7 @@ namespace FYT.DataAccess.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("ReservedCourses");
+                    b.ToTable("ReservedCourse");
                 });
 
             modelBuilder.Entity("FYT.Models.User", b =>
@@ -217,7 +217,7 @@ namespace FYT.DataAccess.Migrations
                         .HasColumnType("rowversion")
                         .IsFixedLength(true);
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -433,7 +433,7 @@ namespace FYT.DataAccess.Migrations
 
                     b.HasOne("FYT.Models.User", "User")
                         .WithMany("Comment")
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
@@ -446,7 +446,7 @@ namespace FYT.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "User")
+                    b.HasOne("FYT.Models.User", "Tutor")
                         .WithMany("Course")
                         .HasForeignKey("TutorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -461,7 +461,7 @@ namespace FYT.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "User")
+                    b.HasOne("FYT.Models.User", "Student")
                         .WithMany("Rating")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -476,7 +476,7 @@ namespace FYT.DataAccess.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "User")
+                    b.HasOne("FYT.Models.User", "Student")
                         .WithMany("ReservedCourse")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)

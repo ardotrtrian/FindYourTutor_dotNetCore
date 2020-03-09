@@ -10,6 +10,6 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         IEnumerable<SelectListItem> GetCategoryListForDropDown();
 
-        void Update(Category category);
+        bool Update(Category category);
     }
 }

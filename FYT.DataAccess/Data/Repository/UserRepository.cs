@@ -21,16 +21,21 @@ namespace FYT.DataAccess.Data.Repository
             return _db.User.Where(u => u.Role == role);
         }
 
-        public void Update(User user)
+        public bool Update(User user)
         {
             var objFromDb = _db.User.FirstOrDefault(u => u.Id == user.Id);
+            if(objFromDb == null)
+            {
+                return false;
+            }
 
-            objFromDb.Username = user.Username;
+            objFromDb.UserName = user.UserName;
             objFromDb.Email = user.Email;
             objFromDb.Image = user.Image;
             objFromDb.Password = user.Password;
             
             _db.SaveChanges();
+            return true;
         }
     }
 }

@@ -26,13 +26,18 @@ namespace FYT.DataAccess.Data.Repository
             });
         }
 
-        public void Update(Category category)
+        public bool Update(Category category)
         {
             var objFromDb = _db.Category.FirstOrDefault(c => c.Id == category.Id);
 
+            if (objFromDb == null)
+            {
+                return false;
+            }
             objFromDb.Name = category.Name;
 
             _db.SaveChanges();
+            return true;
         }
     }
 }

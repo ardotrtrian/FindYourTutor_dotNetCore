@@ -7,7 +7,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface IUserRepository : IRepository<User>
     {
-        void Update(User user);
+        bool Update(User user);
 
         IEnumerable<User> GetAll(Role role);
     }

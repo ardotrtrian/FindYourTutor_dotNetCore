@@ -18,7 +18,7 @@ namespace FYT.DataAccess.Data
         public DbSet<Category> Category { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Comment> Comment { get; set; }
-        public DbSet<ReservedCourse> ReservedCourses { get; set; }
+        public DbSet<ReservedCourse> ReservedCourse { get; set; }
         public DbSet<Course> Course { get; set; }
         public DbSet<Rating> Rating { get; set; }
 
@@ -60,6 +60,12 @@ namespace FYT.DataAccess.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<Course>()
+               .HasMany(e => e.ReservedCourse)
+               .WithOne(e => e.Course)
+               .IsRequired()
+               .OnDelete(DeleteBehavior.Restrict);
+
             modelBuilder.Entity<Rating>()
                 .Property(e => e.Timestamp)
                 .IsFixedLength();
@@ -76,19 +82,26 @@ namespace FYT.DataAccess.Data
                 .HasMany(e => e.Comment)
                 .WithOne(e => e.User)
                 .IsRequired()
-                .HasForeignKey(e => e.StudentId)
+                .HasForeignKey(e => e.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
+               .HasMany(e => e.Course)
+               .WithOne(e => e.Tutor)
+               .IsRequired()
+               .HasForeignKey(e => e.TutorId)
+               .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
                 .HasMany(e => e.Rating)
-                .WithOne(e => e.User)
+                .WithOne(e => e.Student)
                 .IsRequired()
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.ReservedCourse)
-                .WithOne(e => e.User)
+                .WithOne(e => e.Student)
                 .IsRequired()
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);

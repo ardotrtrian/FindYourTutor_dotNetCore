@@ -21,16 +21,21 @@ namespace FYT.DataAccess.Data.Repository
             return _db.Course.Where(c => c.TutorId == tutorId); 
         }
 
-        public void Update(Course course)
+        public bool Update(Course course)
         {
             var objFromDb = _db.Course.FirstOrDefault(c => c.Id == course.Id);
 
+            if (objFromDb == null)
+            {
+                return false;
+            }
             objFromDb.Name = course.Name;
             objFromDb.Category = course.Category;
             objFromDb.Description = course.Description;
             objFromDb.StartDate = course.EndDate;
 
             _db.SaveChanges();
+            return true;
         }
     }
 }

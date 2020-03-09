@@ -18,26 +18,30 @@ namespace FYT.DataAccess.Data.Repository
 
         public IEnumerable<ReservedCourse> GetAll(int studentId)
         {
-            return _db.ReservedCourses.Where(r => r.StudentId == studentId);
+            return _db.ReservedCourse.Where(r => r.StudentId == studentId);
         }
 
         public IEnumerable<ReservedCourse> GetAllByCourse(int courseId)
         {
-            return _db.ReservedCourses.Where(r => r.Course.Id == courseId);
+            return _db.ReservedCourse.Where(r => r.Course.Id == courseId);
         }
 
         public IEnumerable<ReservedCourse> GetAll(Status status)
         {
-            return _db.ReservedCourses.Where(r => r.Status == status);
+            return _db.ReservedCourse.Where(r => r.Status == status);
         }
 
-        public void Update(ReservedCourse reservedCourse)
+        public bool Update(ReservedCourse reservedCourse)
         {
-            var objFromDb = _db.ReservedCourses.FirstOrDefault(r => r.Id == reservedCourse.Id);
-
+            var objFromDb = _db.ReservedCourse.FirstOrDefault(r => r.Id == reservedCourse.Id);
+            if(objFromDb == null)
+            {
+                return false;
+            }
             objFromDb.Status = reservedCourse.Status;
             
             _db.SaveChanges();
+            return true;
         }
     }
 }

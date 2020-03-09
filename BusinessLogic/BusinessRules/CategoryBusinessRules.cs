@@ -47,9 +47,9 @@ namespace FYT.BusinessLogic.BusinessRules
             return _unitOfWork.Category.Get(id);
         }
 
-        public void Update(Category category)
+        public bool Update(Category category)
         {
-            _unitOfWork.Category.Update(category);
+            return _unitOfWork.Category.Update(category);
         }
     }
 }

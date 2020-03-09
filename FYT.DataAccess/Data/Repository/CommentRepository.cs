@@ -17,7 +17,7 @@ namespace FYT.DataAccess.Data.Repository
         }
         public IEnumerable<Comment> GetAllByStudent(int studentId)
         {
-            return _db.Comment.Where(c => c.StudentId == studentId);
+            return _db.Comment.Where(c => c.UserId == studentId);
         }
 
         public IEnumerable<Comment> GetAll(int courseId)
@@ -25,13 +25,18 @@ namespace FYT.DataAccess.Data.Repository
             return _db.Comment.Where(c => c.Course.Id == courseId);
         }
 
-        public void Update(Comment comment)
+        public bool Update(Comment comment)
         {
             var objFromDb = _db.Comment.FirstOrDefault(c => c.Id == comment.Id);
 
+            if (objFromDb == null)
+            {
+                return false;
+            }
             objFromDb.Description = "(*edited)" + comment.Description;
 
             _db.SaveChanges();
+            return true;
         }
     }
 }
