@@ -8,13 +8,14 @@ namespace FYT.Models
 {
     public partial class ReservedCourse : EntityBase
     {
-        [Required]
+        public int CourseId { get; set; }
+
+        public int StudentId { get; set; }
+
+        public Status Status { get; set; }
+               
         public virtual Course Course { get; set; }
 
-        [Required]
-        public User Student { get; set; }
-
-        [Required]
-        public Status Status { get; set; }
+        public virtual User User { get; set; }
     }
 }

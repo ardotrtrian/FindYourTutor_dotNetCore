@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FYT.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200307130926_changes")]
-    partial class changes
+    [Migration("20200309085918_fixed")]
+    partial class @fixed
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,13 +30,14 @@ namespace FYT.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.HasKey("Id");
 
@@ -53,7 +54,7 @@ namespace FYT.DataAccess.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("CreationDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -66,7 +67,8 @@ namespace FYT.DataAccess.Migrations
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.HasKey("Id");
 
@@ -96,8 +98,8 @@ namespace FYT.DataAccess.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(25)")
-                        .HasMaxLength(25);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -108,7 +110,8 @@ namespace FYT.DataAccess.Migrations
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.Property<int>("TutorId")
                         .HasColumnType("int");
@@ -120,26 +123,6 @@ namespace FYT.DataAccess.Migrations
                     b.HasIndex("TutorId");
 
                     b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("FYT.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Timestamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Image");
                 });
 
             modelBuilder.Entity("FYT.Models.Rating", b =>
@@ -161,7 +144,8 @@ namespace FYT.DataAccess.Migrations
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.HasKey("Id");
 
@@ -191,7 +175,8 @@ namespace FYT.DataAccess.Migrations
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.HasKey("Id");
 
@@ -214,14 +199,16 @@ namespace FYT.DataAccess.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("image");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<byte>("Role")
                         .HasColumnType("tinyint");
@@ -229,15 +216,15 @@ namespace FYT.DataAccess.Migrations
                     b.Property<byte[]>("Timestamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                        .HasColumnType("rowversion")
+                        .IsFixedLength(true);
 
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ImageId");
 
                     b.ToTable("User");
                 });
@@ -441,69 +428,60 @@ namespace FYT.DataAccess.Migrations
             modelBuilder.Entity("FYT.Models.Comment", b =>
                 {
                     b.HasOne("FYT.Models.Course", "Course")
-                        .WithMany("Comments")
+                        .WithMany("Comment")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "Student")
-                        .WithMany()
+                    b.HasOne("FYT.Models.User", "User")
+                        .WithMany("Comment")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("FYT.Models.Course", b =>
                 {
                     b.HasOne("FYT.Models.Category", "Category")
-                        .WithMany("Courses")
+                        .WithMany("Course")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "Tutor")
-                        .WithMany()
+                    b.HasOne("FYT.Models.User", "User")
+                        .WithMany("Course")
                         .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("FYT.Models.Rating", b =>
                 {
                     b.HasOne("FYT.Models.Course", "Course")
-                        .WithMany("Ratings")
+                        .WithMany("Rating")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "Student")
-                        .WithMany()
+                    b.HasOne("FYT.Models.User", "User")
+                        .WithMany("Rating")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("FYT.Models.ReservedCourse", b =>
                 {
                     b.HasOne("FYT.Models.Course", "Course")
-                        .WithMany()
+                        .WithMany("ReservedCourse")
                         .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FYT.Models.User", "Student")
-                        .WithMany()
+                    b.HasOne("FYT.Models.User", "User")
+                        .WithMany("ReservedCourse")
                         .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("FYT.Models.User", b =>
-                {
-                    b.HasOne("FYT.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

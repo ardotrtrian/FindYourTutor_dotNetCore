@@ -18,7 +18,7 @@ namespace FYT.DataAccess.Data.Repository
 
         public IEnumerable<ReservedCourse> GetAll(int studentId)
         {
-            return _db.ReservedCourses.Where(r => r.Student.Id == studentId);
+            return _db.ReservedCourses.Where(r => r.StudentId == studentId);
         }
 
         public IEnumerable<ReservedCourse> GetAllByCourse(int courseId)
