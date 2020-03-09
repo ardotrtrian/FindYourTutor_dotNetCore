@@ -14,9 +14,9 @@ namespace FYT.Areas.User.Controllers
     [Area("User")]
     public class CourseController : Controller
     {
-        private readonly ICourseBusinessRule<Course> _br;
+        private readonly ICourseBusinessRules<Course> _br;
 
-        public CourseController(ICourseBusinessRule<Course> br)
+        public CourseController(ICourseBusinessRules<Course> br)
         {
             _br = br;
         }

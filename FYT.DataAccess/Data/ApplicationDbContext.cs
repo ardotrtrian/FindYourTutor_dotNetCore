@@ -43,11 +43,7 @@ namespace FYT.DataAccess.Data
             modelBuilder.Entity<Course>()
                 .Property(e => e.Price)
                 .IsRequired();
-            //--------------------------------//
-            //modelBuilder.Entity<Course>()
-            //    .Property(e => e.Category)
-            //    .IsRequired();
-
+            
             modelBuilder.Entity<Course>()
                 .Property(e => e.Timestamp)
                 .IsFixedLength();

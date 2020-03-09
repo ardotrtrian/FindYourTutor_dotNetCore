@@ -15,6 +15,13 @@ namespace FYT.BusinessLogic.BusinessRules
         {
             _unitOfWork = unitOfWork;
         }
+
+        public void Create(Category category)
+        {
+            _unitOfWork.Category.Add(category);
+            _unitOfWork.Save();
+        }
+
         public bool Delete(int id)
         {
             var objFromDb = _unitOfWork.Category.Get(id);
@@ -33,6 +40,16 @@ namespace FYT.BusinessLogic.BusinessRules
         public IEnumerable<Category> GetAll()
         {
             return _unitOfWork.Category.GetAll();
+        }
+
+        public Category GetById(int id)
+        {
+            return _unitOfWork.Category.Get(id);
+        }
+
+        public void Update(Category category)
+        {
+            _unitOfWork.Category.Update(category);
         }
     }
 }

@@ -9,6 +9,12 @@ namespace FYT.BusinessLogic.IBusinessRules
     {
         public IEnumerable<Category> GetAll();
 
+        public Category GetById(int id);
+
         public bool Delete(int id);
+
+        public void Create(Category category);
+        
+        public void Update(Category category); 
     }
 }

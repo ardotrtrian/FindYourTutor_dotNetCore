@@ -7,11 +7,11 @@ using System.Text;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
-    public class CourseBusinessRule : ICourseBusinessRule<Course>
+    public class CourseBusinessRules : ICourseBusinessRules<Course>
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CourseBusinessRule(IUnitOfWork unitOfWork)
+        public CourseBusinessRules(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -39,6 +39,23 @@ namespace FYT.BusinessLogic.BusinessRules
         public IEnumerable<Course> GetAll(int TutorId)
         {
             return _unitOfWork.Course.GetAll(TutorId);
+        }
+
+        public void Create(Course course)
+        {
+            _unitOfWork.Course.Add(course);
+            _unitOfWork.Save();
+        }
+
+        public void Update(Course course)
+        {
+            _unitOfWork.Course.Update(course);
+            
+        }
+
+        public Course GetById(int id)
+        {
+            return _unitOfWork.Course.Get(id);
         }
     }
 }

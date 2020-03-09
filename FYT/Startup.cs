@@ -41,7 +41,7 @@ namespace FYT
 
             //--
                 services.AddScoped<IUnitOfWork, UnitOfWork>();
-                services.AddScoped<ICourseBusinessRule<Course>, CourseBusinessRule>();
+                services.AddScoped<ICourseBusinessRules<Course>, CourseBusinessRules>();
             services.AddScoped<ICategoryBusinessRules<Category>, CategoryBusinessRules>();
             //--
 

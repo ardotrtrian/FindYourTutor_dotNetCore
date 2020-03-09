@@ -5,13 +5,19 @@ using System.Text;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
-    public interface ICourseBusinessRule<T> where T : Course
+    public interface ICourseBusinessRules<T> where T : Course
     {
         public IEnumerable<Course> GetAll();
-
+        
         public IEnumerable<Course> GetAll(int TutorId);
 
+        public Course GetById(int id);
+        
         public bool Delete(int id);
+
+        public void Create(Course course);
+
+        public void Update(Course course);
 
 
     }
