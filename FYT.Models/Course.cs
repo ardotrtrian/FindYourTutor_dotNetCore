@@ -8,44 +8,45 @@ using FYT.Models.Base;
 namespace FYT.Models
 {
     public partial class Course : EntityBase
-    {     
+    {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Course()
         {
             Comment = new HashSet<Comment>();
             Rating = new HashSet<Rating>();
-            ReservedCourse = new HashSet<ReservedCourse>();
-        }        
+        }
 
         [Required]
         [Display(Name = "Course Name")]
-        [StringLength(50)]
+        [StringLength(25)]
         public string Name { get; set; }
 
         public int TutorId { get; set; }
 
+        [ForeignKey("TutorId")]
+        public User Tutor { get; set; }
+
         public int CategoryId { get; set; }
 
+        [ForeignKey("CategoryId")]
+        public virtual Category Category { get; set; }
+
+        [Required]
         public DateTime StartDate { get; set; }
 
+        [Required]
         public DateTime EndDate { get; set; }
 
         [Required]
         public string Description { get; set; }
 
-       public double Price { get; set; }
-
-        public virtual Category Category { get; set; }
+        [Required]
+        public double Price { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
 
-        public virtual User User { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Rating { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ReservedCourse> ReservedCourse { get; set; }
     }
 }
