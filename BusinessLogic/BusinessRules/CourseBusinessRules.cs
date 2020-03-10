@@ -41,10 +41,11 @@ namespace FYT.BusinessLogic.BusinessRules
             return _unitOfWork.Course.GetAll(TutorId);
         }
 
-        public void Create(Course course)
+        public Course Create(Course course)
         {
             _unitOfWork.Course.Add(course);
             _unitOfWork.Save();
+            return course;
         }
 
         public bool Update(Course course)

@@ -16,10 +16,11 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork = unitOfWork;
         }
 
-        public void Create(Category category)
+        public Category Create(Category category)
         {
             _unitOfWork.Category.Add(category);
             _unitOfWork.Save();
+            return category;
         }
 
         public bool Delete(int id)

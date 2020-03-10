@@ -15,7 +15,7 @@ namespace FYT.BusinessLogic.IBusinessRules
 
         public bool Delete(int id);
 
-        public void Create(Comment comment);
+        public Comment Create(Comment comment);
 
         public bool Update(Comment comment);
     }

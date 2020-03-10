@@ -16,10 +16,11 @@ namespace FYT.BusinessLogic.BusinessRules
         {
             _unitOfWork = unitOfWork;
         }
-        public void Create(Comment comment)
+        public Comment Create(Comment comment)
         {
             _unitOfWork.Comment.Add(comment);
             _unitOfWork.Save();
+            return comment;
         }
 
         public bool Delete(int id)

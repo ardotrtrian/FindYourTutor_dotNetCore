@@ -15,7 +15,7 @@ namespace FYT.BusinessLogic.IBusinessRules
         
         public bool Delete(int id);
 
-        public void Create(Course course);
+        public Course Create(Course course);
 
         public bool Update(Course course);
 

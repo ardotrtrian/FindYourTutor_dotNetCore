@@ -13,7 +13,7 @@ namespace FYT.BusinessLogic.IBusinessRules
 
         public bool Delete(int id);
 
-        public void Create(Category category);
+        public Category Create(Category category);
         
         public bool Update(Category category); 
     }
