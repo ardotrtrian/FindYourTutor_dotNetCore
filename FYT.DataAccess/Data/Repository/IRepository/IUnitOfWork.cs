@@ -16,7 +16,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 
         IReservedCourseRepository ReservedCourse { get; }
 
-        IUserRepository UserRepository { get; }
+        IUserRepository User { get; } 
 
         void Save();
     }

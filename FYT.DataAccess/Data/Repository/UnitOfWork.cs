@@ -19,7 +19,7 @@ namespace FYT.DataAccess.Data.Repository
 
         public IReservedCourseRepository ReservedCourse { get; private set; }
 
-        public IUserRepository UserRepository { get; private set; }
+        public IUserRepository User { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -29,7 +29,7 @@ namespace FYT.DataAccess.Data.Repository
             Comment = new CommentRepository(_db);
             Rating = new RatingRepository(_db);
             ReservedCourse = new ReservedCourseRepository(_db);
-            UserRepository = new UserRepository(_db);
+            User = new UserRepository(_db);
         }
 
         public void Dispose()
