@@ -1,4 +1,5 @@
 ﻿using FYT.Models.Base;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,7 +19,7 @@ namespace FYT.Models
             ReservedCourse = new HashSet<ReservedCourse>();
         }
 
-        
+
         [Required]
         [StringLength(50)]
         public string UserName { get; set; }
@@ -33,10 +34,10 @@ namespace FYT.Models
 
         public Role Role { get; set; }
 
-        [Column(TypeName = "image")]
-        public byte[] Image { get; set; }
-
-        public DateTime BirthDate { get; set; }
+        //[Column(TypeName = "image")]
+        //public byte[] Image { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? BirthDate { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }

@@ -52,7 +52,7 @@ namespace FYT.DataAccess.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDateTime")
+                    b.Property<DateTime?>("CreationDateTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -91,7 +91,7 @@ namespace FYT.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -102,7 +102,7 @@ namespace FYT.DataAccess.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<byte[]>("Timestamp")
@@ -192,16 +192,13 @@ namespace FYT.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("BirthDate")
+                    b.Property<DateTime?>("BirthDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
-
-                    b.Property<byte[]>("Image")
-                        .HasColumnType("image");
 
                     b.Property<string>("Password")
                         .IsRequired()

@@ -31,7 +31,7 @@ namespace FYT.DataAccess.Data.Repository
 
             objFromDb.UserName = user.UserName;
             objFromDb.Email = user.Email;
-            objFromDb.Image = user.Image;
+            //objFromDb.Image = user.Image;
             objFromDb.Password = user.Password;
             
             _db.SaveChanges();

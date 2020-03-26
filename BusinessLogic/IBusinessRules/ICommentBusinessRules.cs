@@ -18,5 +18,9 @@ namespace FYT.BusinessLogic.IBusinessRules
         public Comment Create(Comment comment);
 
         public bool Update(Comment comment);
+
+        public IEnumerable<Course> GetCourses();
+
+        public IEnumerable<User> GetUsers();
     }
 }

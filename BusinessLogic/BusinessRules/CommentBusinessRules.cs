@@ -53,6 +53,16 @@ namespace FYT.BusinessLogic.BusinessRules
             return _unitOfWork.Comment.Get(id);
         }
 
+        public IEnumerable<Course> GetCourses()
+        {
+            return _unitOfWork.Course.GetAll();
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _unitOfWork.User.GetAll();
+        }
+
         public bool Update(Comment comment)
         {
             return _unitOfWork.Comment.Update(comment);

@@ -1,0 +1,88 @@
+﻿@model Tuple<FYT.Models.Course, IEnumerable<FYT.Models.Comment>>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Course</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Price)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Price)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Category)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Category.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Tutor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Tutor.UserName)
+        </dd>
+
+        @*<dt class = "col-sm-2">
+                @Html.DisplayNameFor(model => model.Timestamp)
+            </dt>
+            <dd class = "col-sm-10">
+                @Html.DisplayFor(model => model.Timestamp)
+            </dd>*@
+    </dl>
+    <h4>Comments</h4>
+    <hr />
+    <table class="col-sm-10"
+           @foreach (var item in Model.Item2) { <tr>
+            <td>
+                @(item.User.UserName + ":")
+            </td>
+            <td>
+                @item.Description
+            </td>
+            <td>
+                @item.CreationDateTime
+            </td>
+        </tr>
+    }
+    </table>
+    </dl>
+</div>
+<div>
+    @*<a asp-action="Edit" asp-route-id="@Model.Item1.Id">Edit</a> |*@
+    <a asp-action="Index">Back to List</a> |
+    <a asp-action="CreateComment" asp-route-id="@Model.Item1.Id">Add Comment</a> |
+    <a asp-action="ReserveCourse" asp-route-id="@Model.Item1.Id">Reserve Course</a>
+    @*<a asp-controller="Comments" asp-action="Create" asp-all-id="@Model.Item1.Id ">Add Comment</a>*@
+</div>
+@*asp-route-userid="@Model.Item1.Id"*@

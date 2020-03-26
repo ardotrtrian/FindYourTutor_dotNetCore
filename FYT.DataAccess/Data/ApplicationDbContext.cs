@@ -15,6 +15,12 @@ namespace FYT.DataAccess.Data
         {
         }
 
+        public ApplicationDbContext()
+        {
+
+        }
+
+
         public DbSet<Category> Category { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Comment> Comment { get; set; }

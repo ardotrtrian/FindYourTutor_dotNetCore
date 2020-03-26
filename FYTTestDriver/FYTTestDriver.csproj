@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\FYT.BusinessLogic.csproj" />
+    <ProjectReference Include="..\FYT.DataAccess\FYT.DataAccess.csproj" />
+    <ProjectReference Include="..\FYT.Models\FYT.Models.csproj" />
+  </ItemGroup>
+
+</Project>

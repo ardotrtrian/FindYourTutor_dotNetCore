@@ -19,6 +19,14 @@ namespace FYT.BusinessLogic.IBusinessRules
 
         public ReservedCourse Create(ReservedCourse reservedCourse);
 
+        public IEnumerable<User> GetUsers();
+
+        public Course GetCourse(int id);
+
+        public IEnumerable<Course> GetCourses();
+
+        public IEnumerable<Comment> GetComments(int id);
+
         public bool Update(ReservedCourse reservedCourse);
     }
 }

@@ -58,6 +58,26 @@ namespace FYT.BusinessLogic.BusinessRules
             return _unitOfWork.ReservedCourse.Get(id);
         }
 
+        public IEnumerable<Comment> GetComments(int id)
+        {
+            return _unitOfWork.Comment.GetSome(c => c.CourseId == id);
+        }
+
+        public Course GetCourse(int id)
+        {
+            return _unitOfWork.Course.Get(id);
+        }
+
+        public IEnumerable<Course> GetCourses()
+        {
+            return _unitOfWork.Course.GetAll();
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _unitOfWork.User.GetAll();
+        }
+
         public bool Update(ReservedCourse reservedCourse)
         {
             return _unitOfWork.ReservedCourse.Update(reservedCourse);

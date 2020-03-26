@@ -74,6 +74,9 @@ namespace FYT.DataAccess.Data.Repository
             return query.FirstOrDefault();
         }
 
+        public IEnumerable<T> GetSome(Expression<Func<T, bool>> where) 
+            => dbSet.Where(where).ToList();
+
         public void Remove(int id)
         {
             T entityToRemove = dbSet.Find(id);

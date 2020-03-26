@@ -20,6 +20,7 @@ namespace FYT.DataAccess.Data.Repository.IRepository
             Expression<Func<T,bool>> filter = null,
             string includeProperties = null
             );
+        public IEnumerable<T> GetSome(Expression<Func<T, bool>> where);
 
         void Add(T entity);
 

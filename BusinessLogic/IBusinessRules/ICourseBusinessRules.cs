@@ -8,17 +8,22 @@ namespace FYT.BusinessLogic.IBusinessRules
     public interface ICourseBusinessRules<T> where T : Course
     {
         public IEnumerable<Course> GetAll();
-        
+
         public IEnumerable<Course> GetAll(int TutorId);
 
         public Course GetById(int id);
-        
+
         public bool Delete(int id);
 
         public Course Create(Course course);
 
         public bool Update(Course course);
 
+        public IEnumerable<User> GetTutors();
+
+        public IEnumerable<Comment> GetComments(int id); 
+
+        public IEnumerable<Category> GetCategories();
 
     }
 }

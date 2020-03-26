@@ -25,9 +25,11 @@ namespace FYT.Models
 
         public int CategoryId { get; set; }
 
-        public DateTime StartDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? EndDate { get; set; }
 
         [Required]
         public string Description { get; set; }

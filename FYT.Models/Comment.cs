@@ -15,7 +15,8 @@ namespace FYT.Models
         [Required]
         public string Description { get; set; }
 
-        public DateTime CreationDateTime { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? CreationDateTime { get; set; }
                 
         public virtual Course Course { get; set; }
 

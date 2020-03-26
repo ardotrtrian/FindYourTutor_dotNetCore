@@ -1,0 +1,72 @@
+﻿@model Tuple<FYT.Models.ReservedCourse, FYT.Models.Course, IEnumerable<FYT.Models.Comment>>
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ReservedCourse</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item2.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item2.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item2.Description)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item2.Description)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item1.Student)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item1.Student.Email)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Item2.Tutor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Item2.Tutor.Email)
+        </dd>
+        @*<dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Timestamp)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Timestamp)
+        </dd>*@
+    </dl>
+    <h4>Comments</h4>
+    <hr />
+    <table class="col-sm-10">
+        @foreach (var item in Model.Item3)
+        {
+            <tr>
+                <td>
+                    @(item.User.UserName + ":")
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @item.CreationDateTime
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Item1.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

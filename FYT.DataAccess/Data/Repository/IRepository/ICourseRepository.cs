@@ -9,6 +9,10 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         bool Update(Course course);
 
+        IEnumerable<Course> GetAll();
+
         IEnumerable<Course> GetAll(int TutorId);
+
+        //Comment AddComment(Comment comment);
     }
 }

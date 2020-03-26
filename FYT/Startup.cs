@@ -35,17 +35,25 @@ namespace FYT
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"))); //("ApplicationDbContext")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
 
+            //services.AddIdentity<IdentityUser<int>, IdentityRole>()
+            //   .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddDefaultTokenProviders();
+
+            services.AddIdentity<IdentityUser, IdentityRole>
+                (options => options.SignIn.RequireConfirmedAccount = true)
+        .AddEntityFrameworkStores<ApplicationDbContext>();
+
+        //    services.AddDefaultIdentity<IdentityUser<int>>(options => options.SignIn.RequireConfirmedAccount = true)
+        //.AddEntityFrameworkStores<ApplicationDbContext>();
             //--
-                services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<ICourseBusinessRules<Course>, CourseBusinessRules>();
             services.AddScoped<ICategoryBusinessRules<Category>, CategoryBusinessRules>();
             services.AddScoped<IRatingBusinessRules<Rating>, RatingBusinessRules>();
             services.AddScoped<IReservedCourseBusinessRules<ReservedCourse>, ReservedCourseBusinessRules>();
             services.AddScoped<IUserBusinessRules<User>, UserBusinessRules>();
+            services.AddScoped<ICommentBusinessRules<Comment>, CommentBusinessRules>();
             //--
 
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
@@ -82,7 +90,7 @@ namespace FYT
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+                        
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

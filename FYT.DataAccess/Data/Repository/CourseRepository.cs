@@ -1,5 +1,6 @@
 ﻿using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +17,22 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public IEnumerable<Course> GetAll(int tutorId)
+        public new Course Get(int id)
         {
-            return _db.Course.Where(c => c.TutorId == tutorId); 
+            return _db.Course.Include(c => c.Category).Include(c => c.Tutor).FirstOrDefault(c => c.Id == id);
         }
+
+        public IEnumerable<Course> GetAll(int tutorId)
+        {  
+            var courses = _db.Course.Include(c => c.Category).Include(c => c.Tutor);
+            return courses.Where(c => c.TutorId == tutorId); 
+        }
+
+        public IEnumerable<Course> GetAll()
+        {
+            return _db.Course.Include(c => c.Category).Include(c => c.Tutor);
+        }
+        
 
         public bool Update(Course course)
         {
@@ -32,7 +45,11 @@ namespace FYT.DataAccess.Data.Repository
             objFromDb.Name = course.Name;
             objFromDb.Category = course.Category;
             objFromDb.Description = course.Description;
-            objFromDb.StartDate = course.EndDate;
+            objFromDb.StartDate = course.StartDate;
+            objFromDb.EndDate = course.EndDate;
+            objFromDb.Price = course.Price;
+
+
 
             _db.SaveChanges();
             return true;

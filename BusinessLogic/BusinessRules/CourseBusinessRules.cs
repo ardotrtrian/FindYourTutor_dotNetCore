@@ -58,5 +58,21 @@ namespace FYT.BusinessLogic.BusinessRules
         {
             return _unitOfWork.Course.Get(id);
         }
+
+        public IEnumerable<User> GetTutors()
+        {
+            return _unitOfWork.User.GetSome(t => t.Role == Role.Tutor);
+        }
+
+        public IEnumerable<Comment> GetComments(int id)
+        {
+            return _unitOfWork.Comment.GetSome(c => c.CourseId == id);
+        }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            return _unitOfWork.Category.GetAll();
+        }
+
     }
 }
