@@ -111,6 +111,10 @@ namespace FYT.DataAccess.Data
                 .IsRequired()
                 .HasForeignKey(e => e.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>()
+                .HasIndex(e => e.Email).IsUnique();
+                
         }
     }
 }

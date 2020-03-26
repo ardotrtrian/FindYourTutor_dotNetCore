@@ -28,6 +28,24 @@ namespace FYT.Areas.User.Controllers
             return View(users.ToList());
         }
 
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Login([Bind("Email,Password")] Models.User user)
+        {
+            var _user = _bRules.GetAll()
+                .Where(u => u.Email == user.Email)
+                .Where(u => u.Password == user.Password).FirstOrDefault();
+            if(_user != null)
+            {
+                return RedirectToAction("Details", "Users", new { id = _user.Id });
+            }
+            return RedirectToAction("Create", "Users");
+        }
+
         // GET: User/Users/Details/5
         public IActionResult Details(int? id)
         {
