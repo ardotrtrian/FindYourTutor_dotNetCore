@@ -26,13 +26,44 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Courses
-        public IActionResult Index()
+        
+        public IActionResult Index(string searchString)
         {
+            //int? id = TempData["UserId"] as int?;
+            //TempData["userId"] = id;
+            //var courses = _bRules.GetAll().Where(c => c.TutorId != id.Value);
+            //return View(courses.ToList());   
+
+
+
             int? id = TempData["UserId"] as int?;
-            TempData["userId"] = id;
+            TempData["UserId"] = id;
             var courses = _bRules.GetAll().Where(c => c.TutorId != id.Value);
-            return View(courses.ToList());            
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                courses = courses.Where(c => c.Name.Contains(searchString));         
+            }
+            return View(courses.ToList());
+
         }
+
+        //[HttpGet]
+        //public IActionResult Search(string searchString)
+        //{
+        //    if (searchString == null)
+        //    {
+        //        return NotFound();
+        //    }
+            
+        //    if (course == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(course);
+
+        //}
 
         //public IActionResult Index(string searchString)
         //{
@@ -41,7 +72,7 @@ namespace FYT.Areas.User.Controllers
         //    // ViewModel
 
         //    var items = _bRules.GetAll();
-            
+
 
         //    // Search
 
@@ -65,6 +96,7 @@ namespace FYT.Areas.User.Controllers
         //}
 
         // GET: User/Courses/Details/5
+        
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -81,9 +113,10 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Courses/Create
+        
         public IActionResult Create()
         {
-           
+              
             ViewData["CategoryId"] = new SelectList(_bRules.GetCategories(), "Id", "Name");
             ViewData["TutorId"] = new SelectList(_bRules.GetTutors(), "Id", "UserName");
             return View();
@@ -107,6 +140,7 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Courses/Edit/5
+        
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -161,6 +195,7 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Courses/Delete/5
+        
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -188,18 +223,27 @@ namespace FYT.Areas.User.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
         public IActionResult CreateComment(int? id)
         {
             TempData["CourseId"] = id;
             return RedirectToAction("Create", "Comments");
         }
 
+       
         public IActionResult ReserveCourse(int? id)
         {
             //int? idU = TempData["userId"] as int?;
             //TempData["_userId"] = idU;
             TempData["CourseId"] = id;
             return RedirectToAction("Create", "ReservedCourses");
+        }
+
+        public IActionResult GoToMyPage()
+        {
+            int? Id = TempData["UserId"] as int?;
+            //TempData["UserId"] = Id;
+            return RedirectToAction("Details", "Users", new { id = Id.Value });
         }
 
         private bool CourseExists(int id)

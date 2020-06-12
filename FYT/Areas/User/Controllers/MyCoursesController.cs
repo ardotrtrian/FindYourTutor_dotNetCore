@@ -25,7 +25,7 @@ namespace FYT.Areas.User.Controllers
         public IActionResult Index()
         {
             int? id = TempData["UserId"] as int?;
-            TempData["userId"] = id;
+            TempData["UserId"] = id;
             var courses = _bRules.GetAll(id.Value);
             return View(courses.ToList());
         }
@@ -64,7 +64,7 @@ namespace FYT.Areas.User.Controllers
         {
             if (ModelState.IsValid)
             {
-                int? id = TempData["userId"] as int?;
+                int? id = TempData["UserId"] as int?;//u U
                 course.TutorId = id.Value;
                 _bRules.Create(course);
                 return RedirectToAction(nameof(Index));
@@ -154,6 +154,13 @@ namespace FYT.Areas.User.Controllers
             _bRules.Delete(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult GoToMyPage()
+        {
+            int? Id = TempData["UserId"] as int?;
+            //TempData["UserId"] = Id;
+            return RedirectToAction("Details", "Users", new { id = Id.Value });
         }
 
         public IActionResult CreateComment(int? id)

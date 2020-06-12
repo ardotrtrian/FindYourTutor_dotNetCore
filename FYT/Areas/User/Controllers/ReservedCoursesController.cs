@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using FYT.DataAccess.Data;
 using FYT.Models;
 using FYT.BusinessLogic.IBusinessRules;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace FYT.Areas.User.Controllers
 {
@@ -25,7 +26,7 @@ namespace FYT.Areas.User.Controllers
         public IActionResult Index()
         {
             int? id = TempData["UserId"] as int?;
-            TempData["_userId"] = id;
+            TempData["UserId"] = id;
             var reservedCourses = _bRules.GetAll(id.Value);
             return View(reservedCourses.ToList());
         }
@@ -37,7 +38,9 @@ namespace FYT.Areas.User.Controllers
             {
                 return NotFound();
             }
-            var reservedCourse = new Tuple<ReservedCourse,Course, IEnumerable<Comment>>(_bRules.GetById(id.Value), _bRules.GetCourse(id.Value), _bRules.GetComments(_bRules.GetCourse(id.Value).Id));
+            var reservedCourse = new Tuple<ReservedCourse,Course, IEnumerable<Comment>>
+                (_bRules.GetById(id.Value), _bRules.GetCourse(_bRules.GetById(id.Value).CourseId),
+                _bRules.GetComments(_bRules.GetCourse(_bRules.GetById(id.Value).CourseId).Id));
             if (reservedCourse == null)
             {
                 return NotFound();
@@ -68,7 +71,7 @@ namespace FYT.Areas.User.Controllers
                 TempData["UserId"] = idU;
                 
                 
-                if(_bRules.GetAll().Where(u => u.StudentId == idU.Value).Where(c => c.CourseId == idC.Value) == null)
+                if(_bRules.GetAll().Where(u => u.StudentId == idU.Value).Where(c => c.CourseId == idC.Value).FirstOrDefault() == null)
                 {
                     reservedCourse.CourseId = idC.Value;
                     reservedCourse.StudentId = idU.Value;
@@ -167,6 +170,13 @@ namespace FYT.Areas.User.Controllers
         {
             _bRules.Delete(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult GoToMyPage()
+        {
+            int? Id = TempData["UserId"] as int?;
+            //TempData["UserId"] = Id;
+            return RedirectToAction("Details", "Users", new { id = Id.Value });
         }
 
         private bool ReservedCourseExists(int id)

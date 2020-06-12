@@ -161,5 +161,12 @@ namespace FYT.Areas.User.Controllers
         {
             return _bRules.GetAll().Any(e => e.Id == id);
         }
+
+        public IActionResult GoToMyPage()
+        {
+            int? Id = TempData["UserId"] as int?;
+            //TempData["UserId"] = Id;
+            return RedirectToAction("Details", "Users", new { id = Id.Value });
+        }
     }
 }

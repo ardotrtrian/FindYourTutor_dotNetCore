@@ -6,7 +6,10 @@
 
 <h1>My Page</h1>
 <p>
-    <a asp-action="GetMyCourses" asp-route-id="@Model.Id">My Courses</a> |
+    @if (@Model.Role == Role.Tutor)
+    {
+        <p><a asp-action="GetMyCourses" asp-route-id="@Model.Id">My Courses</a></p>
+    }
     <a asp-action="GetCourses" asp-route-id="@Model.Id">All Courses</a> |
     <a asp-action="GetMyReservedCourses" asp-route-id="@Model.Id">Reserved Courses</a>
 </p>

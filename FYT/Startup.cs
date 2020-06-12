@@ -55,7 +55,7 @@ namespace FYT
             services.AddScoped<IUserBusinessRules<User>, UserBusinessRules>();
             services.AddScoped<ICommentBusinessRules<Comment>, CommentBusinessRules>();
             //--
-
+            
             services.AddControllersWithViews().AddNewtonsoftJson().AddRazorRuntimeCompilation();
             services.AddRazorPages();
 
@@ -83,6 +83,7 @@ namespace FYT
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

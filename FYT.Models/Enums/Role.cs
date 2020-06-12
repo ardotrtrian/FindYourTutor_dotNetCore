@@ -6,8 +6,8 @@ namespace FYT.Models
 {
     public enum Role : byte
     {
-        Admin = 1,
-        Tutor = 2,
-        Student = 3
+        //Admin = 1,
+        Tutor = 1,
+        Student = 2
     }
 }
