@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
@@ -10,6 +11,6 @@ namespace FYT.DataAccess.Data.Repository.IRepository
     {
         IEnumerable<SelectListItem> GetCategoryListForDropDown();
 
-        bool Update(Category category);
+        Task<bool> UpdateAsync(Category category);
     }
 }

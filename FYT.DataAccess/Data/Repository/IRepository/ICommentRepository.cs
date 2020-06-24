@@ -1,21 +1,23 @@
 ﻿using FYT.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface ICommentRepository : IRepository<Comment>
     {
-        bool Update(Comment comment);
+        Task<bool> UpdateAsync(Comment comment);
 
-        IEnumerable<Comment> GetAll();
+        IQueryable<Comment> GetAll();
 
-        IEnumerable<Comment> GetAllByStudent(int studentId);
+        IQueryable<Comment> GetAllByStudent(int studentId);
 
-        new IEnumerable<Comment> GetSome(Expression<Func<Comment, bool>> where);
+        new IQueryable<Comment> GetSome(Expression<Func<Comment, bool>> where);
 
-        IEnumerable<Comment> GetAll(int courseId);
+        IQueryable<Comment> GetAll(int courseId);
     }
 }

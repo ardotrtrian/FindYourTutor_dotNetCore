@@ -2,21 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
     public interface IRatingBusinessRules<T> where T : Rating
     {
-        public IEnumerable<Rating> GetAll();
+        public Task<IEnumerable<Rating>> GetAllAsync();
 
-        public IEnumerable<Rating> GetAll(int courseId);
+        public Task<IEnumerable<Rating>> GetAllAsync(int courseId);
 
-        public Rating GetById(int id);
+        public Task<Rating> GetAsync(int id);
 
-        public bool Delete(int id);
+        public Task<bool> DeleteAsync(int id);
+  
+        public Task<Rating> CreateAsync(Rating rating);
 
-        public Rating Create(Rating rating);
-
-        public bool Update(Rating rating);
+        public Task<bool> UpdateAsync(Rating rating);
     }
 }

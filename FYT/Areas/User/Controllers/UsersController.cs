@@ -22,10 +22,9 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Users
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var users = _bRules.GetAll();
-            return View(users.ToList());
+            return View(await _bRules.GetAllAsync());
         }
 
         public IActionResult Login()
@@ -34,11 +33,11 @@ namespace FYT.Areas.User.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([Bind("Email,Password")] Models.User user)
+        public async Task<IActionResult> Login([Bind("Email,Password")] Models.User user)
         {
-            var _user = _bRules.GetAll()
+            var _user = (await _bRules.GetAllAsync())
                 .Where(u => u.Email == user.Email)
-                .Where(u => u.Password == user.Password).FirstOrDefault();
+                .Where(u => u.Password == user.Password).AsQueryable().FirstOrDefault();
             if(_user != null)
             {
                 return RedirectToAction("Details", "Users", new { id = _user.Id });
@@ -47,14 +46,14 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Users/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = _bRules.GetById(id.Value);
+            var user = await _bRules.GetByIdAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -72,8 +71,7 @@ namespace FYT.Areas.User.Controllers
                                                     Text = role.ToString(),
                                                     Value = Convert.ToInt32(role).ToString()
                                                 };
-            ViewData["Role"] = new SelectList(roles, "Value", "Text");
-            //ViewData["Role"] = new SelectList(Enum.GetNames(typeof(Role)));            
+            ViewData["Role"] = new SelectList(roles, "Value", "Text");           
             return View();
         }
 
@@ -82,11 +80,11 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("UserName,Email,Password,Role,Image,BirthDate,Id")] Models.User user)
+        public async Task<IActionResult> Create([Bind("UserName,Email,Password,Role,Image,BirthDate,Id")] Models.User user)
         {
             if (ModelState.IsValid)
             {
-                _bRules.Create(user);
+                await _bRules.CreateAsync(user);
                 return RedirectToAction("Details", "Users", new { id = user.Id });
             }
             IEnumerable<SelectListItem> roles = from Role role in Enum.GetValues(typeof(Role))
@@ -96,19 +94,18 @@ namespace FYT.Areas.User.Controllers
                                                      Value = Convert.ToInt32(role).ToString()
                                                  };
             ViewData["Role"] = new SelectList(roles, "Value", "Text", user.Role);
-            //ViewData["Role"] = new SelectList(Enum.GetNames(typeof(Role)), user.Role);
             return View(user);
         }
 
         // GET: User/Users/Edit/5
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = _bRules.GetById(id.Value);
+            var user = await _bRules.GetByIdAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -121,7 +118,7 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("UserName,Email,Password,Role,Image,BirthDate,Id")] Models.User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserName,Email,Password,Role,Image,BirthDate,Id")] Models.User user)
         {
             if (id != user.Id)
             {
@@ -132,11 +129,11 @@ namespace FYT.Areas.User.Controllers
             {
                 try
                 {
-                    _bRules.Update(user);
+                    await _bRules.UpdateAsync(user);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UserExists(user.Id))
+                    if (!UserExists(user.Id).Result)
                     {
                         return NotFound();
                     }
@@ -151,14 +148,14 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Users/Delete/5
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var user = _bRules.GetById(id.Value);
+            var user = await _bRules.GetByIdAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -170,9 +167,9 @@ namespace FYT.Areas.User.Controllers
         // POST: User/Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _bRules.Delete(id);
+            await _bRules.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -194,9 +191,9 @@ namespace FYT.Areas.User.Controllers
             return RedirectToAction("Index", "Courses");
         }
 
-        private bool UserExists(int id)
+        private async Task<bool> UserExists(int id)
         {
-            return _bRules.GetAll().Any(e => e.Id == id);
+            return (await _bRules.GetAllAsync()).Any(e => e.Id == id);
         }
     }
 }

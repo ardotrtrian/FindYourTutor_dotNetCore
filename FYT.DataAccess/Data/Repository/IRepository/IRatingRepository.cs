@@ -1,17 +1,19 @@
 ﻿using FYT.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface IRatingRepository : IRepository<Rating>
     {
-        bool Update(Rating rating);
+        Task<bool> UpdateAsync(Rating rating);
 
-        IEnumerable<Rating> GetAll(int courseId);
-        
-        IEnumerable<Rating> GetAllByStudent(int studentId);
+        IQueryable<Rating> GetAll(int courseId);
+
+        IQueryable<Rating> GetAllByStudent(int studentId);
         
     }
 }

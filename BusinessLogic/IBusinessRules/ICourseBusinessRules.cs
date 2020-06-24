@@ -2,28 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
     public interface ICourseBusinessRules<T> where T : Course
     {
-        public IEnumerable<Course> GetAll();
+        public Task<IEnumerable<Course>> GetAllAsync();
 
-        public IEnumerable<Course> GetAll(int TutorId);
+        public Task<IEnumerable<Course>> GetAllAsync(int TutorId);
 
-        public Course GetById(int id);
+        public Task<Course> GetAsync(int id);
 
-        public bool Delete(int id);
+        public Task<bool> DeleteAsync(int id);
 
-        public Course Create(Course course);
+        public Task<Course> CreateAsync(Course course);
 
-        public bool Update(Course course);
+        public Task<bool> UpdateAsync(Course course);
 
-        public IEnumerable<User> GetTutors();
+        public Task<IEnumerable<User>> GetTutorsAsync();
 
-        public IEnumerable<Comment> GetComments(int id); 
+        public Task<IEnumerable<Comment>> GetCommentsAsync(int id); 
 
-        public IEnumerable<Category> GetCategories();
+        public Task<IEnumerable<Category>> GetCategoriesAsync();
 
     }
 }

@@ -1,9 +1,11 @@
 ﻿using FYT.BusinessLogic.IBusinessRules;
 using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
@@ -16,16 +18,16 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork = unitOfWork;
         }
 
-        public ReservedCourse Create(ReservedCourse reservedCourse)
+        public async Task<ReservedCourse> CreateAsync(ReservedCourse reservedCourse)
         {
             _unitOfWork.ReservedCourse.Add(reservedCourse);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return reservedCourse;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var objFromDb = _unitOfWork.ReservedCourse.Get(id);
+            var objFromDb = await _unitOfWork.ReservedCourse.GetAsync(id);
 
             if (objFromDb == null)
             {
@@ -33,54 +35,54 @@ namespace FYT.BusinessLogic.BusinessRules
             }
 
             _unitOfWork.ReservedCourse.Remove(objFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
-        public IEnumerable<ReservedCourse> GetAll()
+        public async Task<IEnumerable<ReservedCourse>> GetAllAsync()
         {
-            return _unitOfWork.ReservedCourse.GetAll();
+            return await _unitOfWork.ReservedCourse.GetAll().ToListAsync();
         }
 
-        public IEnumerable<ReservedCourse> GetAll(int studentId)
+        public async Task<IEnumerable<ReservedCourse>> GetAllAsync(int studentId)
         {
-            return _unitOfWork.ReservedCourse.GetAll(studentId);
+            return await _unitOfWork.ReservedCourse.GetAll(studentId).ToListAsync();
         }
 
-        public IEnumerable<ReservedCourse> GetAllByCourse(int courseId)
+        public async Task<IEnumerable<ReservedCourse>> GetAllByCourseAsync(int courseId)
         {
-            return _unitOfWork.ReservedCourse.GetAllByCourse(courseId);
+            return await _unitOfWork.ReservedCourse.GetAllByCourse(courseId).ToListAsync();
         }
 
-        public ReservedCourse GetById(int id)
+        public async Task<ReservedCourse> GetAsync(int id)
         {
-            return _unitOfWork.ReservedCourse.Get(id);
+            return await _unitOfWork.ReservedCourse.GetAsync(id);
         }
 
-        public IEnumerable<Comment> GetComments(int id)
+        public async Task<IEnumerable<Comment>> GetCommentsAsync(int id)
         {
-            return _unitOfWork.Comment.GetSome(c => c.CourseId == id);
+            return await _unitOfWork.Comment.GetSome(c => c.CourseId == id).ToListAsync();
         }
 
-        public Course GetCourse(int id)
+        public async Task<Course> GetCourseAsync(int id)
         {
-            return _unitOfWork.Course.Get(id);
+            return await _unitOfWork.Course.GetAsync(id);
         }
 
-        public IEnumerable<Course> GetCourses()
+        public async Task<IEnumerable<Course>> GetCoursesAsync()
         {
-            return _unitOfWork.Course.GetAll();
+            return await _unitOfWork.Course.GetAll().ToListAsync();
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return _unitOfWork.User.GetAll();
+            return await  _unitOfWork.User.GetAll().ToListAsync();
         }
 
-        public bool Update(ReservedCourse reservedCourse)
+        public async Task<bool> UpdateAsync(ReservedCourse reservedCourse)
         {
-            return _unitOfWork.ReservedCourse.Update(reservedCourse);
+            return await _unitOfWork.ReservedCourse.UpdateAsync(reservedCourse);
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -26,9 +28,9 @@ namespace FYT.DataAccess.Data.Repository
             });
         }
 
-        public bool Update(Category category)
+        public async Task<bool> UpdateAsync(Category category)
         {
-            var objFromDb = _db.Category.FirstOrDefault(c => c.Id == category.Id);
+            var objFromDb = await _db.Category.FirstOrDefaultAsync(c => c.Id == category.Id);
 
             if (objFromDb == null)
             {
@@ -36,7 +38,7 @@ namespace FYT.DataAccess.Data.Repository
             }
             objFromDb.Name = category.Name;
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return true;
         }
     }

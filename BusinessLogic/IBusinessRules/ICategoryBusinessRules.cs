@@ -2,19 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
     public interface ICategoryBusinessRules<T> where T : Category
     {
-        public IEnumerable<Category> GetAll();
+        public Task<IEnumerable<Category>> GetAllAsync();
 
-        public Category GetById(int id);
+        public Task<Category> GetAsync(int id);
 
-        public bool Delete(int id);
+        public Task<bool> DeleteAsync(int id);
 
-        public Category Create(Category category);
+        public Task<Category> CreateAsync(Category category);
         
-        public bool Update(Category category); 
+        public Task<bool> UpdateAsync(Category category); 
     }
 }

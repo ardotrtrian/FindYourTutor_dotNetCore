@@ -1,9 +1,11 @@
 ﻿using FYT.BusinessLogic.IBusinessRules;
 using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
@@ -16,16 +18,16 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork = unitOfWork;
         }
 
-        public Rating Create(Rating rating)
+        public async Task<Rating> CreateAsync(Rating rating)
         {
             _unitOfWork.Rating.Add(rating);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return rating;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var objFromDb = _unitOfWork.Rating.Get(id);
+            var objFromDb = await _unitOfWork.Rating.GetAsync(id);
 
             if (objFromDb == null)
             {
@@ -33,29 +35,29 @@ namespace FYT.BusinessLogic.BusinessRules
             }
 
             _unitOfWork.Rating.Remove(objFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
-        public IEnumerable<Rating> GetAll()
+        public async Task<IEnumerable<Rating>> GetAllAsync()
         {
-            return _unitOfWork.Rating.GetAll();
+            return await _unitOfWork.Rating.GetAll().ToListAsync();
         }
 
-        public IEnumerable<Rating> GetAll(int courseId)
+        public async Task<IEnumerable<Rating>> GetAllAsync(int courseId)
         {
-            return _unitOfWork.Rating.GetAll(courseId);
+            return await _unitOfWork.Rating.GetAll(courseId).ToListAsync();
         }
 
-        public Rating GetById(int id)
+        public async Task<Rating> GetAsync(int id)
         {
-            return _unitOfWork.Rating.Get(id);
+            return await _unitOfWork.Rating.GetAsync(id);
         }
 
-        public bool Update(Rating rating)
+        public async Task<bool> UpdateAsync(Rating rating)
         {
-            return _unitOfWork.Rating.Update(rating);
+            return await _unitOfWork.Rating.UpdateAsync(rating);
         }
     }
 }

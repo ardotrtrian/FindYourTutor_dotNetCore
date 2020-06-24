@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -17,24 +18,24 @@ namespace FYT.DataAccess.Data.Repository
         {
             _db = db;
         }
-        public IEnumerable<Comment> GetAllByStudent(int studentId)
+        public IQueryable<Comment> GetAllByStudent(int studentId)
         {
             return _db.Comment.Where(c => c.UserId == studentId);
         }
 
-        public new Comment Get(int id)
+        public new async Task<Comment> GetAsync(int id)
         {
-            return _db.Comment.Include(c => c.Course).Include(c => c.User).FirstOrDefault(c => c.Id == id);
+            return await _db.Comment.Include(c => c.Course).Include(c => c.User).FirstOrDefaultAsync(c => c.Id == id);
         }
-        public IEnumerable<Comment> GetAll(int courseId)
+        public IQueryable<Comment> GetAll(int courseId)
         {
             var courses = _db.Comment.Include(c => c.Course).Include(c => c.User);
             return _db.Comment.Where(c => c.Course.Id == courseId);
         }
 
-        public bool Update(Comment comment)
+        public async Task<bool> UpdateAsync(Comment comment)
         {
-            var objFromDb = _db.Comment.FirstOrDefault(c => c.Id == comment.Id);
+            var objFromDb = await _db.Comment.FirstOrDefaultAsync(c => c.Id == comment.Id);
 
             if (objFromDb == null)
             {
@@ -42,16 +43,16 @@ namespace FYT.DataAccess.Data.Repository
             }
             objFromDb.Description = "(*edited)" + comment.Description;
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return true;
         }
 
-        public IEnumerable<Comment> GetAll()
+        public IQueryable<Comment> GetAll()
         {
             return _db.Comment.Include(c => c.Course).Include(c => c.User);
         }
 
-        public new IEnumerable<Comment> GetSome(Expression<Func<Comment, bool>> where)
+        public new IQueryable<Comment> GetSome(Expression<Func<Comment, bool>> where)
             => _db.Comment.Include(c => c.Course).Include(c => c.User).Where(where);
     }
 }

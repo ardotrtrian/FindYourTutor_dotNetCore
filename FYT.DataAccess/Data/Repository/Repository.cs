@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -22,39 +23,15 @@ namespace FYT.DataAccess.Data.Repository
         public void Add(T entity)
         {
             dbSet.Add(entity);
-            
+
         }
 
-        public T Get(int id)
+        public async Task<T> GetAsync(int id)
         {
-            return dbSet.Find(id);
+            return await dbSet.FindAsync(id);
         }
 
-        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
-        {
-            IQueryable<T> query = dbSet;
-
-            if (filter != null)
-            {
-                query = query.Where(filter);
-            }
-
-            if (includeProperties !=null)
-            {
-                foreach (var includeProperty in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-
-            if (orderBy != null)
-            {
-                return orderBy(query).ToList();
-            }
-            return query.ToList();
-        }
-
-        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        public IQueryable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
@@ -71,15 +48,42 @@ namespace FYT.DataAccess.Data.Repository
                 }
             }
 
-            return query.FirstOrDefault();
+            if (orderBy != null)
+            {
+                return orderBy(query);
+            }
+            return query;
         }
 
-        public IEnumerable<T> GetSome(Expression<Func<T, bool>> where) 
-            => dbSet.Where(where).ToList();
-
-        public void Remove(int id)
+        public async Task<T> GetFirstOrDefaultAsync(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
-            T entityToRemove = dbSet.Find(id);
+            IQueryable<T> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties
+                    .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperty);
+                }
+            }
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public IQueryable<T> GetSome(Expression<Func<T, bool>> where)
+        {
+            return dbSet.Where(where); 
+        }
+
+        public async Task Remove(int id)
+        {
+            T entityToRemove = await dbSet.FindAsync(id);
             Remove(entityToRemove);
         }
 

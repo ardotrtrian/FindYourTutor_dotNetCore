@@ -52,13 +52,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Item1.Tutor.UserName)
         </dd>
-
-        @*<dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </dt>
-            <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Timestamp)
-            </dd>*@
     </dl>
     <h4>Comments</h4>
     <hr />
@@ -76,13 +69,10 @@
         </tr>
     }
     </table>
-    @*</dl>*@
+ 
 </div>
 <div>
-    @*<a asp-action="Edit" asp-route-id="@Model.Item1.Id">Edit</a> |*@
     <a asp-action="Index">Back to List</a> |
     <a asp-action="CreateComment" asp-route-id="@Model.Item1.Id">Add Comment</a> |
     <a asp-action="ReserveCourse" asp-route-id="@Model.Item1.Id">Reserve Course</a>
-    @*<a asp-controller="Comments" asp-action="Create" asp-all-id="@Model.Item1.Id ">Add Comment</a>*@
 </div>
-@*asp-route-userid="@Model.Item1.Id"*@

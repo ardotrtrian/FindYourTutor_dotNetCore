@@ -2,31 +2,32 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
     public interface IReservedCourseBusinessRules<T> where T : ReservedCourse
     {
-        public IEnumerable<ReservedCourse> GetAll();
+        public Task<IEnumerable<ReservedCourse>> GetAllAsync();
 
-        public IEnumerable<ReservedCourse> GetAll(int studentId);
+        public Task<IEnumerable<ReservedCourse>> GetAllAsync(int studentId);
 
-        public IEnumerable<ReservedCourse> GetAllByCourse(int courseId);
+        public Task<IEnumerable<ReservedCourse>> GetAllByCourseAsync(int courseId);
 
-        public ReservedCourse GetById(int id);
+        public Task<ReservedCourse> GetAsync(int id);
 
-        public bool Delete(int id);
+        public Task<bool> DeleteAsync(int id);
 
-        public ReservedCourse Create(ReservedCourse reservedCourse);
+        public Task<ReservedCourse> CreateAsync(ReservedCourse reservedCourse);
 
-        public IEnumerable<User> GetUsers();
+        public Task<IEnumerable<User>> GetUsersAsync();
 
-        public Course GetCourse(int id);
+        public Task<Course> GetCourseAsync(int id);
 
-        public IEnumerable<Course> GetCourses();
+        public Task<IEnumerable<Course>> GetCoursesAsync();
 
-        public IEnumerable<Comment> GetComments(int id);
+        public Task<IEnumerable<Comment>> GetCommentsAsync(int id);
 
-        public bool Update(ReservedCourse reservedCourse);
+        public Task<bool> UpdateAsync(ReservedCourse reservedCourse);
     }
 }

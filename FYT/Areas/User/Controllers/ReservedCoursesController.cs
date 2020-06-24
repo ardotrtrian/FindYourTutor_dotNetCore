@@ -23,24 +23,23 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/ReservedCourses
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             int? id = TempData["UserId"] as int?;
             TempData["UserId"] = id;
-            var reservedCourses = _bRules.GetAll(id.Value);
-            return View(reservedCourses.ToList());
+            return View(await _bRules.GetAllAsync(id.Value));
         }
 
         // GET: User/ReservedCourses/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
             var reservedCourse = new Tuple<ReservedCourse,Course, IEnumerable<Comment>>
-                (_bRules.GetById(id.Value), _bRules.GetCourse(_bRules.GetById(id.Value).CourseId),
-                _bRules.GetComments(_bRules.GetCourse(_bRules.GetById(id.Value).CourseId).Id));
+                (await _bRules.GetAsync(id.Value), await _bRules.GetCourseAsync((await _bRules.GetAsync(id.Value)).CourseId),
+                await _bRules.GetCommentsAsync((await _bRules.GetCourseAsync((await _bRules.GetAsync(id.Value)).CourseId)).Id));
             if (reservedCourse == null)
             {
                 return NotFound();
@@ -50,10 +49,10 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/ReservedCourses/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Name");
-            ViewData["StudentId"] = new SelectList(_bRules.GetUsers(), "Id", "UserName");            
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Name");
+            ViewData["StudentId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "UserName");            
             return View();
         }
 
@@ -62,7 +61,7 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("CourseId,StudentId,Status,Id")] ReservedCourse reservedCourse)
+        public async Task<IActionResult> Create([Bind("CourseId,StudentId,Status,Id")] ReservedCourse reservedCourse)
         {
             if (ModelState.IsValid)
             {
@@ -70,43 +69,36 @@ namespace FYT.Areas.User.Controllers
                 int? idU = TempData["userId"] as int?;
                 TempData["UserId"] = idU;
                 
-                
-                if(_bRules.GetAll().Where(u => u.StudentId == idU.Value).Where(c => c.CourseId == idC.Value).FirstOrDefault() == null)
+                if((await _bRules.GetAllAsync()).Where(u => u.StudentId == idU.Value).Where(c => c.CourseId == idC.Value).FirstOrDefault() == null)
                 {
                     reservedCourse.CourseId = idC.Value;
                     reservedCourse.StudentId = idU.Value;
                     reservedCourse.Status = Status.Requested;
-                    _bRules.Create(reservedCourse);
+                    await _bRules.CreateAsync(reservedCourse);
                 }                
                 return RedirectToAction("Index", "Courses");
             }
-            //IEnumerable<SelectListItem> statuses = from Status status in Enum.GetValues(typeof(Status))
-            //                                    select new SelectListItem
-            //                                    {
-            //                                        Text = status.ToString(),
-            //                                        Value = Convert.ToInt32(status).ToString()
-            //                                    };
-            //ViewData["Status"] = new SelectList(statuses, "Value", "Text", reservedCourse.Status);
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Description", reservedCourse.CourseId);
-            ViewData["StudentId"] = new SelectList(_bRules.GetUsers(), "Id", "Email", reservedCourse.StudentId);
+
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Description", reservedCourse.CourseId);
+            ViewData["StudentId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "Email", reservedCourse.StudentId);
             return View(reservedCourse);
         }
 
         // GET: User/ReservedCourses/Edit/5
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reservedCourse = _bRules.GetById(id.Value);
+            var reservedCourse = await _bRules.GetAsync(id.Value);
             if (reservedCourse == null)
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Description", reservedCourse.CourseId);
-            ViewData["StudentId"] = new SelectList(_bRules.GetUsers(), "Id", "Email", reservedCourse.StudentId);
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Description", reservedCourse.CourseId);
+            ViewData["StudentId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "Email", reservedCourse.StudentId);
             return View(reservedCourse);
         }
 
@@ -115,7 +107,7 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("CourseId,StudentId,Status,Id")] ReservedCourse reservedCourse)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseId,StudentId,Status,Id")] ReservedCourse reservedCourse)
         {
             if (id != reservedCourse.Id)
             {
@@ -126,11 +118,11 @@ namespace FYT.Areas.User.Controllers
             {
                 try
                 {
-                    _bRules.Update(reservedCourse);
+                    await _bRules.UpdateAsync(reservedCourse);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ReservedCourseExists(reservedCourse.Id))
+                    if (!ReservedCourseExists(reservedCourse.Id).Result)
                     {
                         return NotFound();
                     }
@@ -141,20 +133,20 @@ namespace FYT.Areas.User.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Description", reservedCourse.CourseId);
-            ViewData["StudentId"] = new SelectList(_bRules.GetUsers(), "Id", "Email", reservedCourse.StudentId);
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Description", reservedCourse.CourseId);
+            ViewData["StudentId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "Email", reservedCourse.StudentId);
             return View(reservedCourse);
         }
 
         // GET: User/ReservedCourses/Delete/5
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reservedCourse = _bRules.GetById(id.Value);
+            var reservedCourse = await _bRules.GetAsync(id.Value);
             if (reservedCourse == null)
             {
                 return NotFound();
@@ -166,22 +158,27 @@ namespace FYT.Areas.User.Controllers
         // POST: User/ReservedCourses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _bRules.Delete(id);
+            await _bRules.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
         public IActionResult GoToMyPage()
         {
             int? Id = TempData["UserId"] as int?;
-            //TempData["UserId"] = Id;
             return RedirectToAction("Details", "Users", new { id = Id.Value });
         }
 
-        private bool ReservedCourseExists(int id)
+        public async Task<IActionResult> CreateComment(int? id)
         {
-            return _bRules.GetAll().Any(e => e.Id == id);
+            TempData["CourseId"] = (await _bRules.GetAsync(id.Value)).CourseId;
+            return RedirectToAction("Create", "Comments");
+        }
+
+        private async Task<bool> ReservedCourseExists(int id)
+        {
+            return (await _bRules.GetAllAsync()).Any(e => e.Id == id);
         }
     }
 }

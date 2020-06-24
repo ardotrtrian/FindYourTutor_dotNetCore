@@ -4,6 +4,10 @@ using FYT.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
@@ -16,16 +20,16 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork = unitOfWork;
         }
 
-        public Category Create(Category category)
+        public async Task<Category> CreateAsync(Category category)
         {
             _unitOfWork.Category.Add(category);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return category;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var objFromDb = _unitOfWork.Category.Get(id);
+            var objFromDb = await _unitOfWork.Category.GetAsync(id);
 
             if (objFromDb == null)
             {
@@ -33,24 +37,24 @@ namespace FYT.BusinessLogic.BusinessRules
             }
 
             _unitOfWork.Category.Remove(objFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
-        public IEnumerable<Category> GetAll()
+        public async Task<IEnumerable<Category>> GetAllAsync()
         {
-            return _unitOfWork.Category.GetAll();
+            return await _unitOfWork.Category.GetAll().ToListAsync();
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetAsync(int id)
         {
-            return _unitOfWork.Category.Get(id);
+            return await _unitOfWork.Category.GetAsync(id);
         }
 
-        public bool Update(Category category)
+        public async Task<bool> UpdateAsync(Category category)
         {
-            return _unitOfWork.Category.Update(category);
+            return await _unitOfWork.Category.UpdateAsync(category);
         }
     }
 }

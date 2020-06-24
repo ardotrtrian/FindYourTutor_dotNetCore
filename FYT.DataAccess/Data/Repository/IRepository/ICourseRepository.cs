@@ -1,18 +1,19 @@
 ﻿using FYT.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface ICourseRepository : IRepository<Course>
     {
-        bool Update(Course course);
+        Task<bool> UpdateAsync(Course course);
 
-        IEnumerable<Course> GetAll();
+        IQueryable<Course> GetAll();
 
-        IEnumerable<Course> GetAll(int TutorId);
+        IQueryable<Course> GetAllByTutor(int TutorId);
 
-        //Comment AddComment(Comment comment);
     }
 }

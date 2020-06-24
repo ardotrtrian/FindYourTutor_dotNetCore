@@ -1,14 +1,16 @@
 ﻿using FYT.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
     public interface IUserRepository : IRepository<User>
     {
-        bool Update(User user);
+        Task<bool> UpdateAsync(User user);
 
-        IEnumerable<User> GetAll(Role role);
+        IQueryable<User> GetAllByRole(Role role);
     }
 }

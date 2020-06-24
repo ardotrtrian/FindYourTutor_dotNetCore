@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository.IRepository
 {
@@ -18,6 +19,6 @@ namespace FYT.DataAccess.Data.Repository.IRepository
 
         IUserRepository User { get; } 
 
-        void Save();
+        Task SaveAsync();
     }
 }

@@ -40,12 +40,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Item2.Tutor.Email)
         </dd>
-        @*<dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Timestamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Timestamp)
-        </dd>*@
     </dl>
     <h4>Comments</h4>
     <hr />
@@ -66,6 +60,6 @@
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Item1.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to List</a>|
+    <a asp-action="CreateComment" asp-route-id="@Model.Item1.Id">Add Comment</a>
 </div>

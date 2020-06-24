@@ -30,12 +30,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Price)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Tutor)
-            </th>*@
-            @*<th>
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -60,12 +54,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Tutor.Email)
-            </td>*@
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>*@
         <td>
             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

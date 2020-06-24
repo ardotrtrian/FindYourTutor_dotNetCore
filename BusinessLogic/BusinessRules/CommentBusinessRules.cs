@@ -1,9 +1,11 @@
 ﻿using FYT.BusinessLogic.IBusinessRules;
 using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
@@ -16,16 +18,16 @@ namespace FYT.BusinessLogic.BusinessRules
         {
             _unitOfWork = unitOfWork;
         }
-        public Comment Create(Comment comment)
+        public async Task<Comment> CreateAsync(Comment comment)
         {
             _unitOfWork.Comment.Add(comment);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return comment;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var objFromDb = _unitOfWork.Comment.Get(id);
+            var objFromDb = await _unitOfWork.Comment.GetAsync(id);
 
             if (objFromDb == null)
             {
@@ -33,39 +35,39 @@ namespace FYT.BusinessLogic.BusinessRules
             }
 
             _unitOfWork.Comment.Remove(objFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
-        public IEnumerable<Comment> GetAll()
+        public async Task<IEnumerable<Comment>> GetAllAsync()
         {
-            return _unitOfWork.Comment.GetAll();
+            return await _unitOfWork.Comment.GetAll().ToListAsync();
         }
 
-        public IEnumerable<Comment> GetAll(int courseId)
+        public async Task<IEnumerable<Comment>> GetAllAsync(int courseId)
         {
-            return _unitOfWork.Comment.GetAll(courseId);
+            return await _unitOfWork.Comment.GetAll(courseId).ToListAsync();
         }
 
-        public Comment GetById(int id)
+        public async Task<Comment> GetAsync(int id)
         {
-            return _unitOfWork.Comment.Get(id);
+            return await _unitOfWork.Comment.GetAsync(id);
         }
 
-        public IEnumerable<Course> GetCourses()
+        public async Task<IEnumerable<Course>> GetCoursesAsync()
         {
-            return _unitOfWork.Course.GetAll();
+            return await _unitOfWork.Course.GetAll().ToListAsync();
         }
 
-        public IEnumerable<User> GetUsers()
+        public async Task<IEnumerable<User>> GetUsersAsync()
         {
-            return _unitOfWork.User.GetAll();
+            return await _unitOfWork.User.GetAll().ToListAsync();
         }
 
-        public bool Update(Comment comment)
+        public async Task<bool> UpdateAsync(Comment comment)
         {
-            return _unitOfWork.Comment.Update(comment);
+            return await _unitOfWork.Comment.UpdateAsync(comment);
         }
     }
 }

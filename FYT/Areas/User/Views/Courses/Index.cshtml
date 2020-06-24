@@ -7,9 +7,6 @@
 
 <h1>Courses</h1>
 
-@*<p>
-    <a asp-action="Create">Create New</a>
-</p>*@
 <form asp-controller="Courses" asp-action="Index">
     <p>
         Title: <input type="text" name="SearchString">
@@ -41,9 +38,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Tutor)
             </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.Timestamp)
-            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -71,13 +65,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Tutor.UserName)
             </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.Timestamp)
-            </td>*@
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
             <a asp-action="ReserveCourse" asp-route-id="@item.Id">Reserve</a> 
         </td>
         </tr>

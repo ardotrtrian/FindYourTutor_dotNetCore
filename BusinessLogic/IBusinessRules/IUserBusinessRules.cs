@@ -2,21 +2,22 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
     public interface IUserBusinessRules<T> where T : User
     {
-        public IEnumerable<User> GetAll();
+        public Task<IEnumerable<User>> GetAllAsync();
 
-        public IEnumerable<User> GetAll(Role role); 
+        public Task<IEnumerable<User>> GetAllByRoleAsync(Role role); 
 
-        public User GetById(int id);
+        public Task<User> GetByIdAsync(int id);
 
-        public bool Delete(int id);
+        public Task<bool> DeleteAsync(int id);
 
-        public User Create(User user);
+        public Task<User> CreateAsync(User user);
 
-        public bool Update(User user); 
+        public Task<bool> UpdateAsync(User user); 
     }
 }

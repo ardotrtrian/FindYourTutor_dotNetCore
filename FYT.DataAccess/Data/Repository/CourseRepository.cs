@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -17,26 +18,27 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public new Course Get(int id)
+        public new async Task<Course> GetAsync(int id)
         {
-            return _db.Course.Include(c => c.Category).Include(c => c.Tutor).FirstOrDefault(c => c.Id == id);
+            return await _db.Course.Include(c => c.Category).Include(c => c.Tutor).FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public IEnumerable<Course> GetAll(int tutorId)
+        
+        public IQueryable<Course> GetAllByTutor(int tutorId)
         {  
             var courses = _db.Course.Include(c => c.Category).Include(c => c.Tutor);
             return courses.Where(c => c.TutorId == tutorId); 
         }
 
-        public IEnumerable<Course> GetAll()
+        public IQueryable<Course> GetAll()
         {
             return _db.Course.Include(c => c.Category).Include(c => c.Tutor);
         }
         
 
-        public bool Update(Course course)
+        public async Task<bool> UpdateAsync(Course course)
         {
-            var objFromDb = _db.Course.FirstOrDefault(c => c.Id == course.Id);
+            var objFromDb = await _db.Course.FirstOrDefaultAsync(c => c.Id == course.Id);
 
             if (objFromDb == null)
             {
@@ -51,8 +53,9 @@ namespace FYT.DataAccess.Data.Repository
 
 
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return true;
         }
+        
     }
 }

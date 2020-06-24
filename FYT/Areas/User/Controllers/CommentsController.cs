@@ -22,20 +22,19 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Comments
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var comments = _bRules.GetAll();
-            return View(comments.ToList());
+            return View(await _bRules.GetAllAsync());
         }
 
         // GET: User/Comments/Details/5
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
-            var comment = _bRules.GetById(id.Value);
+            var comment = await _bRules.GetAsync(id.Value);
             if (comment == null)
             {
                 return NotFound();
@@ -45,10 +44,10 @@ namespace FYT.Areas.User.Controllers
         }
 
         // GET: User/Comments/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {            
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Name");
-            ViewData["UserId"] = new SelectList(_bRules.GetUsers(), "Id", "UserName");
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Name");
+            ViewData["UserId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "UserName");
             return View();
         }
 
@@ -57,7 +56,7 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("CourseId,UserId,Description,CreationDateTime,Id")] Comment comment)
+        public async Task<IActionResult> Create([Bind("CourseId,UserId,Description,CreationDateTime,Id")] Comment comment)
         {
             if (ModelState.IsValid)
             {
@@ -66,31 +65,30 @@ namespace FYT.Areas.User.Controllers
                 int? idU = TempData["userId"] as int?;
                 comment.CourseId = idC.Value;
                 comment.UserId = idU.Value;
-                _bRules.Create(comment);
-                //return RedirectToAction(nameof(Index));
+                await _bRules.CreateAsync(comment);
                 return RedirectToAction("Details", "Courses", new { Id = comment.CourseId });
             }
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Name", comment.CourseId);
-            ViewData["UserId"] = new SelectList(_bRules.GetUsers(), "Id", "UserName", comment.UserId);
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Name", comment.CourseId);
+            ViewData["UserId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "UserName", comment.UserId);
             return View(comment);
             
         }
 
         // GET: User/Comments/Edit/5
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var comment = _bRules.GetById(id.Value);
+            var comment = await _bRules.GetAsync(id.Value);
             if (comment == null)
             {
                 return NotFound();
             }
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Name", comment.CourseId);
-            ViewData["UserId"] = new SelectList(_bRules.GetUsers(), "Id", "UserName", comment.UserId);
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Name", comment.CourseId);
+            ViewData["UserId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "UserName", comment.UserId);
             return View(comment);
             
         }
@@ -100,7 +98,7 @@ namespace FYT.Areas.User.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("CourseId,UserId,Description,CreationDateTime,Id")] Comment comment)
+        public async Task<IActionResult> Edit(int id, [Bind("CourseId,UserId,Description,CreationDateTime,Id")] Comment comment)
         {
             if (id != comment.Id)
             {
@@ -111,11 +109,11 @@ namespace FYT.Areas.User.Controllers
             {
                 try
                 {
-                    _bRules.Update(comment);
+                    await _bRules.UpdateAsync(comment);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentExists(comment.Id))
+                    if (!CommentExists(comment.Id).Result)
                     {
                         return NotFound();
                     }
@@ -126,20 +124,20 @@ namespace FYT.Areas.User.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CourseId"] = new SelectList(_bRules.GetCourses(), "Id", "Name", comment.CourseId);
-            ViewData["UserId"] = new SelectList(_bRules.GetUsers(), "Id", "UserName", comment.UserId);
+            ViewData["CourseId"] = new SelectList(await _bRules.GetCoursesAsync(), "Id", "Name", comment.CourseId);
+            ViewData["UserId"] = new SelectList(await _bRules.GetUsersAsync(), "Id", "UserName", comment.UserId);
             return View(comment);
         }
 
         // GET: User/Comments/Delete/5
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var comment = _bRules.GetById(id.Value);
+            var comment = await _bRules.GetAsync(id.Value);
             if (comment == null)
             {
                 return NotFound();
@@ -151,21 +149,20 @@ namespace FYT.Areas.User.Controllers
         // POST: User/Comments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            _bRules.Delete(id);
+            await _bRules.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CommentExists(int id)
+        private async Task<bool> CommentExists(int id)
         {
-            return _bRules.GetAll().Any(e => e.Id == id);
+            return (await _bRules.GetAllAsync()).Any(e => e.Id == id);
         }
 
         public IActionResult GoToMyPage()
         {
             int? Id = TempData["UserId"] as int?;
-            //TempData["UserId"] = Id;
             return RedirectToAction("Details", "Users", new { id = Id.Value });
         }
     }

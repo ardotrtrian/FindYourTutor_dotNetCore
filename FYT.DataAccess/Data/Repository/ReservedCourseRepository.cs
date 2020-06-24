@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -17,39 +18,39 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public new ReservedCourse Get(int id)
+        public new async Task<ReservedCourse> GetAsync(int id)
         {
-            return _db.ReservedCourse.Include(r => r.Course).Include(r => r.Student).FirstOrDefault(r => r.Id == id);
+            return await _db.ReservedCourse.Include(r => r.Course).Include(r => r.Student).FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public IEnumerable<ReservedCourse> GetAll(int studentId)
+        public IQueryable<ReservedCourse> GetAll(int studentId)
         {
             var rCourses = _db.ReservedCourse.Include(r => r.Course).Include(r => r.Student);
             return rCourses.Where(c => c.StudentId == studentId);
         }
 
-        public IEnumerable<ReservedCourse> GetAllByCourse(int courseId)
+        public IQueryable<ReservedCourse> GetAllByCourse(int courseId)
         {
             var rCourses = _db.ReservedCourse.Include(r => r.Course).Include(r => r.Student);
             return rCourses.Where(r => r.Course.Id == courseId);
         }
 
-        public IEnumerable<ReservedCourse> GetAll(Status status)
+        public IQueryable<ReservedCourse> GetAllByStatus(Status status)
         {
             var rCourses = _db.ReservedCourse.Include(r => r.Course).Include(r => r.Student);
             return rCourses.Where(r => r.Status == status);
         }
 
-        public bool Update(ReservedCourse reservedCourse)
+        public async Task<bool> UpdateAsync(ReservedCourse reservedCourse)
         {
-            var objFromDb = _db.ReservedCourse.FirstOrDefault(r => r.Id == reservedCourse.Id);
+            var objFromDb = await _db.ReservedCourse.FirstOrDefaultAsync(r => r.Id == reservedCourse.Id);
             if(objFromDb == null)
             {
                 return false;
             }
             objFromDb.Status = reservedCourse.Status;
             
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return true;
         }
     }

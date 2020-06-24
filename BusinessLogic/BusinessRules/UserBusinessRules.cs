@@ -4,6 +4,10 @@ using FYT.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.BusinessRules
 {
@@ -16,16 +20,16 @@ namespace FYT.BusinessLogic.BusinessRules
             _unitOfWork = unitOfWork;
         }
 
-        public User Create(User user)
+        public async Task<User> CreateAsync(User user)
         {
             _unitOfWork.User.Add(user);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
             return user;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var objFromDb = _unitOfWork.User.Get(id);
+            var objFromDb = await _unitOfWork.User.GetAsync(id);
 
             if (objFromDb == null)
             {
@@ -33,29 +37,29 @@ namespace FYT.BusinessLogic.BusinessRules
             }
 
             _unitOfWork.User.Remove(objFromDb);
-            _unitOfWork.Save();
+            await _unitOfWork.SaveAsync();
 
             return true;
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return _unitOfWork.User.GetAll();
+            return await _unitOfWork.User.GetAll().ToListAsync();
         }
 
-        public IEnumerable<User> GetAll(Role role)
+        public async Task<IEnumerable<User>> GetAllByRoleAsync(Role role)
         {
-            return _unitOfWork.User.GetAll(role);
+            return await _unitOfWork.User.GetAllByRole(role).ToListAsync();
         }
 
-        public User GetById(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            return _unitOfWork.User.Get(id);
+            return await _unitOfWork.User.GetAsync(id);
         }
 
-        public bool Update(User user)
+        public async Task<bool> UpdateAsync(User user)
         {
-            return _unitOfWork.User.Update(user);
+            return await _unitOfWork.User.UpdateAsync(user);
         }
     }
 }

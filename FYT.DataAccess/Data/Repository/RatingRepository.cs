@@ -1,9 +1,11 @@
 ﻿using FYT.DataAccess.Data.Repository.IRepository;
 using FYT.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -16,26 +18,26 @@ namespace FYT.DataAccess.Data.Repository
             _db = db;
         }
 
-        public IEnumerable<Rating> GetAll(int courseId)
+        public IQueryable<Rating> GetAll(int courseId)
         {
             return _db.Rating.Where(r => r.Course.Id == courseId);
         }
 
-        public IEnumerable<Rating> GetAllByStudent(int studentId)
+        public IQueryable<Rating> GetAllByStudent(int studentId)
         {
             return _db.Rating.Where(r => r.StudentId == studentId);
         }
 
-        public bool Update(Rating rating)
+        public async Task<bool> UpdateAsync(Rating rating)
         {
-            var objFromDb = _db.Rating.FirstOrDefault(r => r.Id == rating.Id);
+            var objFromDb = await _db.Rating.FirstOrDefaultAsync(r => r.Id == rating.Id);
             if(objFromDb == null)
             {
                 return false;
             }
             objFromDb.Rate = rating.Rate;            
 
-            _db.SaveChanges();
+            await _db.SaveChangesAsync();
             return true;
         }
     }

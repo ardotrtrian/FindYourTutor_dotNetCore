@@ -4,7 +4,6 @@
     ViewData["Title"] = "Create";
 }
 
-@*<h1>Create</h1>*@
 
 <h4>ReservedCourse</h4>
 <hr />
@@ -12,20 +11,6 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            @*<div class="form-group">
-                <label asp-for="CourseId" class="control-label"></label>
-                <select asp-for="CourseId" class ="form-control" asp-items="ViewBag.CourseId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="StudentId" class="control-label"></label>
-                <select asp-for="StudentId" class ="form-control" asp-items="ViewBag.StudentId"></select>
-            </div>*@
-            @*<div class="form-group">
-                @Html.DropDownList("Status", "Select")
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>*@
             <div class="form-group">
                 <input type="submit" value="Reserve course" class="btn btn-primary" />
             </div>

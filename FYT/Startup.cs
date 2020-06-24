@@ -34,18 +34,12 @@ namespace FYT
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"))); //("ApplicationDbContext")));
-
-            //services.AddIdentity<IdentityUser<int>, IdentityRole>()
-            //   .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
+                    Configuration.GetConnectionString("DefaultConnection"))); //("ApplicationDbContext"))
 
             services.AddIdentity<IdentityUser, IdentityRole>
                 (options => options.SignIn.RequireConfirmedAccount = true)
         .AddEntityFrameworkStores<ApplicationDbContext>();
 
-        //    services.AddDefaultIdentity<IdentityUser<int>>(options => options.SignIn.RequireConfirmedAccount = true)
-        //.AddEntityFrameworkStores<ApplicationDbContext>();
             //--
             services.AddScoped<IUnitOfWork, UnitOfWork>();
                 services.AddScoped<ICourseBusinessRules<Course>, CourseBusinessRules>();

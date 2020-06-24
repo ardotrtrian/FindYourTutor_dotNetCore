@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FYT.DataAccess.Data.Repository
 {
@@ -36,9 +37,9 @@ namespace FYT.DataAccess.Data.Repository
         {
             _db?.Dispose();
         }
-        public void Save()
+        public async Task SaveAsync()
         {
-            _db.SaveChanges();
+           await _db.SaveChangesAsync();
         }
     }
 }
