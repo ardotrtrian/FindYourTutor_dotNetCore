@@ -2,7 +2,7 @@
 
 namespace FYT.Models.Base
 {
-    public class EntityBase
+    public abstract class EntityBase
     {
         [Key]
         public int Id { get; set; }

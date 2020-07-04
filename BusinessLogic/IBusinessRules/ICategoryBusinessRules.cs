@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
-    public interface ICategoryBusinessRules<T> where T : Category
+    public interface ICategoryBusinessRules<T>: IBusinessRules<T> where T : Category 
     {
-        public Task<IEnumerable<Category>> GetAllAsync();
+        //public Task<IEnumerable<Category>> GetAllAsync();
 
-        public Task<Category> GetAsync(int id);
+        //public Task<Category> GetAsync(int id);
 
-        public Task<bool> DeleteAsync(int id);
+        //public Task<bool> DeleteAsync(int id);
 
-        public Task<Category> CreateAsync(Category category);
+        //public Task<Category> CreateAsync(Category category);
         
-        public Task<bool> UpdateAsync(Category category); 
+        //public Task<bool> UpdateAsync(Category category); 
     }
 }

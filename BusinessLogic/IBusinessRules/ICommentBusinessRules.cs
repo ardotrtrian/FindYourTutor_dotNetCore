@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
-    public interface ICommentBusinessRules<T> where T : Comment
+    public interface ICommentBusinessRules<T> : IBusinessRules<T> where T : Comment
     {
-        public Task<IEnumerable<Comment>> GetAllAsync();
+        //public Task<IEnumerable<Comment>> GetAllAsync();
 
         public Task<IEnumerable<Comment>> GetAllAsync(int courseId);
 
-        public Task<Comment> GetAsync(int id);
+        //public Task<Comment> GetAsync(int id);
 
-        public Task<bool> DeleteAsync(int id);
+        //public Task<bool> DeleteAsync(int id);
 
-        public Task<Comment> CreateAsync(Comment comment);
+        //public Task<Comment> CreateAsync(Comment comment);
 
-        public Task<bool> UpdateAsync(Comment comment);
+        //public Task<bool> UpdateAsync(Comment comment);
 
         public Task<IEnumerable<Course>> GetCoursesAsync();
 

@@ -36,8 +36,7 @@ namespace FYT.Models
 
         public Role Role { get; set; }
 
-        //[Column(TypeName = "image")]
-        //public byte[] Image { get; set; }
+        
         [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
 

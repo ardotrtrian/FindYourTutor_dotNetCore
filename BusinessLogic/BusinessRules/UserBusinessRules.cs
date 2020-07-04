@@ -52,7 +52,7 @@ namespace FYT.BusinessLogic.BusinessRules
             return await _unitOfWork.User.GetAllByRole(role).ToListAsync();
         }
 
-        public async Task<User> GetByIdAsync(int id)
+        public async Task<User> GetAsync(int id)
         {
             return await _unitOfWork.User.GetAsync(id);
         }

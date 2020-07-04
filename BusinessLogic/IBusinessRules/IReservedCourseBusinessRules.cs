@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace FYT.BusinessLogic.IBusinessRules
 {
-    public interface IReservedCourseBusinessRules<T> where T : ReservedCourse
+    public interface IReservedCourseBusinessRules<T> : IBusinessRules<T> where T : ReservedCourse
     {
-        public Task<IEnumerable<ReservedCourse>> GetAllAsync();
+        //public Task<IEnumerable<ReservedCourse>> GetAllAsync();
 
         public Task<IEnumerable<ReservedCourse>> GetAllAsync(int studentId);
 
         public Task<IEnumerable<ReservedCourse>> GetAllByCourseAsync(int courseId);
 
-        public Task<ReservedCourse> GetAsync(int id);
+        //public Task<ReservedCourse> GetAsync(int id);
 
-        public Task<bool> DeleteAsync(int id);
+        //public Task<bool> DeleteAsync(int id);
 
-        public Task<ReservedCourse> CreateAsync(ReservedCourse reservedCourse);
+        //public Task<ReservedCourse> CreateAsync(ReservedCourse reservedCourse);
 
         public Task<IEnumerable<User>> GetUsersAsync();
 
@@ -28,6 +28,6 @@ namespace FYT.BusinessLogic.IBusinessRules
 
         public Task<IEnumerable<Comment>> GetCommentsAsync(int id);
 
-        public Task<bool> UpdateAsync(ReservedCourse reservedCourse);
+        //public Task<bool> UpdateAsync(ReservedCourse reservedCourse);
     }
 }

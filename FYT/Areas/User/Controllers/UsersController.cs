@@ -53,7 +53,7 @@ namespace FYT.Areas.User.Controllers
                 return NotFound();
             }
 
-            var user = await _bRules.GetByIdAsync(id.Value);
+            var user = await _bRules.GetAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -105,7 +105,7 @@ namespace FYT.Areas.User.Controllers
                 return NotFound();
             }
 
-            var user = await _bRules.GetByIdAsync(id.Value);
+            var user = await _bRules.GetAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
@@ -155,7 +155,7 @@ namespace FYT.Areas.User.Controllers
                 return NotFound();
             }
 
-            var user = await _bRules.GetByIdAsync(id.Value);
+            var user = await _bRules.GetAsync(id.Value);
             if (user == null)
             {
                 return NotFound();
